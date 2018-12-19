@@ -1,0 +1,26 @@
+PODS:
+  - Cache (4.2.0)
+  - FXKeychain (1.5.3)
+  - ReachabilitySwift (4.1.0)
+  - Siesta (1.4.0):
+    - Siesta/Core (= 1.4.0)
+  - Siesta/Core (1.4.0)
+  - SwiftyBeaver (1.6.0)
+
+DEPENDENCIES:
+  - Cache (~> 4.1)
+  - FXKeychain (~> 1.5)
+  - ReachabilitySwift (~> 4.1)
+  - Siesta (~> 1.4)
+  - SwiftyBeaver (~> 1.4)
+
+SPEC CHECKSUMS:
+  Cache: f28f8dd64b632155aabf9b3906b036a659048251
+  FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  Siesta: feae635134e33336ff6a7048c43b993a3f7ce1b9
+  SwiftyBeaver: e45759613e50b522b0e6f53b1f0f14389b45ca34
+
+PODFILE CHECKSUM: 75f0aa16a4856543dfe438f0fafdbc63aa687ff5
+
+COCOAPODS: 1.4.0

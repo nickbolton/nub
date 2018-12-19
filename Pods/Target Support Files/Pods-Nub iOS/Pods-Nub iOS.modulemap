@@ -1,0 +1,6 @@
+framework module Pods_Nub_iOS {
+  umbrella header "Pods-Nub iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
