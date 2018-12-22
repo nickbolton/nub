@@ -52,6 +52,14 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
 
     public var rootView: T { return view as! T }
     
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

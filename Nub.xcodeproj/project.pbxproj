@@ -66,6 +66,8 @@
 		923F615E21C84F8F009641AF /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923F615D21C84F8F009641AF /* UIFont+Utils.swift */; };
 		923F616021C850AF009641AF /* View+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923F615F21C850AF009641AF /* View+Layout.swift */; };
 		924B519821C853D000A8464B /* TextDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B519721C853D000A8464B /* TextDescriptor.swift */; };
+		927C832721CAD0DD00BB865C /* UIButton+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832621CAD0DD00BB865C /* UIButton+Layout.swift */; };
+		927C832F21CAE16100BB865C /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832E21CAE16100BB865C /* BaseLabel.swift */; };
 		92D9C5E7219CBEEF00F47866 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D9C5E6219CBEEF00F47866 /* Property.swift */; };
 		92E73B602190F2A900AF98B9 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E73B5F2190F2A900AF98B9 /* DataProvider.swift */; };
 		92E73B612190F3ED00AF98B9 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920618EA218D9E3300FB6097 /* Logger.swift */; };
@@ -136,6 +138,8 @@
 		923F615D21C84F8F009641AF /* UIFont+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		923F615F21C850AF009641AF /* View+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Layout.swift"; sourceTree = "<group>"; };
 		924B519721C853D000A8464B /* TextDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDescriptor.swift; sourceTree = "<group>"; };
+		927C832621CAD0DD00BB865C /* UIButton+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Layout.swift"; sourceTree = "<group>"; };
+		927C832E21CAE16100BB865C /* BaseLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
 		92D9C5E6219CBEEF00F47866 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		92E73B5F2190F2A900AF98B9 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		9FAACFD082F5C6ED5BB3F1A2 /* Pods-Nub iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nub iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nub iOS/Pods-Nub iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -257,6 +261,7 @@
 		92061919218DBD7800FB6097 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				927C832621CAD0DD00BB865C /* UIButton+Layout.swift */,
 				9206193D218DC05A00FB6097 /* DispatchQueue+Utils.swift */,
 				9206192D218DBE1200FB6097 /* String+Utils.swift */,
 				9206191A218DBD7800FB6097 /* UIViewController+Helpers.swift */,
@@ -308,6 +313,7 @@
 				923E254921A056FA006143B4 /* BaseImageView.swift */,
 				923E254A21A056FA006143B4 /* BaseView.swift */,
 				923E254C21A056FA006143B4 /* LoaderView.swift */,
+				927C832E21CAE16100BB865C /* BaseLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -587,11 +593,13 @@
 				923E257521A05822006143B4 /* CollectionViewController.swift in Sources */,
 				923E257621A05822006143B4 /* ThemedTableViewController.swift in Sources */,
 				92061938218DBFB200FB6097 /* DispatchTaskPerformer.swift in Sources */,
+				927C832721CAD0DD00BB865C /* UIButton+Layout.swift in Sources */,
 				923E257C21A05822006143B4 /* BaseCollectionViewCell.swift in Sources */,
 				923E257221A05822006143B4 /* BaseCollectionViewLayout.swift in Sources */,
 				923F615321C84D49009641AF /* NSLayoutConstraint+TextLayout.swift in Sources */,
 				923E259A21A0640F006143B4 /* CollectionViewController2.swift in Sources */,
 				923E257F21A05822006143B4 /* ThemedTableCell.swift in Sources */,
+				927C832F21CAE16100BB865C /* BaseLabel.swift in Sources */,
 				923E258221A05C75006143B4 /* View+Animation.swift in Sources */,
 				923F616021C850AF009641AF /* View+Layout.swift in Sources */,
 				923E254D21A056FA006143B4 /* BaseImageView.swift in Sources */,

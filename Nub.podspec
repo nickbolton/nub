@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
 
   s.subspec "View" do |s|
     s.ios.source_files = "Source/View/**/*.{swift,m,h}"
-    s.dependency "Nub/Core"
+    s.dependency "Nub/Theme"
     s.dependency "SnapKit", "~> 4.0"
     s.exclude_files = "**/Info*.plist"
     s.ios.resources = "Source/**/*.xib"
@@ -88,6 +88,8 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Core"
     s.dependency "Nub/Api"
     s.dependency "Nub/View"
+    s.dependency "Nub/Logger"
+    s.dependency "Nub/Locker"
     s.exclude_files = "**/Info*.plist"
     s.ios.resources = "Source/**/*.xib"
   end

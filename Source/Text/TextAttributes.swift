@@ -8,7 +8,7 @@
 import UIKit
 typealias LineBreakModeType = Int
 
-public enum SystemFontWeight {
+public enum SystemFontWeight: String {
     case regular
     case italic
     case ultralight
