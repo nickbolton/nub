@@ -86,7 +86,7 @@ open class BaseView: UIView, ThemeableView {
     private func _addMissingConstraintsIfNecessary() {
         if canAddMissingConstraints() && !didAddMissingConstraints {
             addMissingConstraints()
-            didAddMissingConstraints = true;
+            didAddMissingConstraints = true
         }
     }
     
