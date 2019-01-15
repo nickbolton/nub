@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nub"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Nub Foundation Library"
 
   s.description  = <<-DESC
@@ -111,6 +111,7 @@ Pod::Spec.new do |s|
 
   s.subspec "iOSApplication" do |s|
     s.dependency "Nub/Core"
+    s.dependency "Nub/Bootstrap"
     s.dependency "Nub/Locker"
     s.dependency "Nub/Localize"
     s.dependency "Nub/Api"
