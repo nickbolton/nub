@@ -145,5 +145,6 @@ open class BaseView: UIView, ThemeableView {
     open func updateSafeAreaConstraints() {
         guard useSafeAreaContainer else { return }
         setNeedsLayout()
+        _addMissingConstraintsIfNecessary()
     }
 }
