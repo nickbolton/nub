@@ -1,13 +1,13 @@
 //
-//  BaseLabel.swift
+//  BaseTextView.swift
 //  Nub
 //
-//  Created by Nick Bolton on 12/19/18.
+//  Created by Nick Bolton on 1/20/19.
 //
 
 import UIKit
 
-open class BaseLabel: UILabel, ThemeableView {
+class BaseTextView: UITextView {
 
     private var didAddMissingConstraints = false;
     private(set) public var isThemeable = false
@@ -21,11 +21,11 @@ open class BaseLabel: UILabel, ThemeableView {
         _commonInit()
     }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
         _commonInit()
     }
-    
+        
     // MARK: Setup
     
     private func _commonInit() {

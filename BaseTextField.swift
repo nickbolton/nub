@@ -1,13 +1,13 @@
 //
-//  BaseLabel.swift
+//  BaseTextField.swift
 //  Nub
 //
-//  Created by Nick Bolton on 12/19/18.
+//  Created by Nick Bolton on 1/20/19.
 //
 
 import UIKit
 
-open class BaseLabel: UILabel, ThemeableView {
+class BaseTextField: UITextField {
 
     private var didAddMissingConstraints = false;
     private(set) public var isThemeable = false
