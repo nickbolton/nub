@@ -37,6 +37,7 @@ open class BaseView: UIView, ThemeableView {
     // MARK: Setup
     
     private func _commonInit() {
+        safeAreaContainer.translatesAutoresizingMaskIntoConstraints = false
         initializeViews()
         assembleViews()
         constrainViews()
