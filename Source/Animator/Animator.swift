@@ -204,6 +204,24 @@ extension UIView {
         return result
     }
 
+    static public func initiallyTranslatedAnimator(_ views: [UIView?], translations: [CGVector], startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
+        assert(views.count == translations.count, "views.count != translations.count")
+        assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
+        assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
+        assert(startingAt <= endingAt, "startingAt \(startingAt) > endingAt \(endingAt)")
+        let result = InitiallyTranslatedAnimator(views: views, translations: translations, easing: easing)
+        result.startingAt = startingAt
+        result.endingAt = endingAt
+        return result
+    }
+    static public func presentFromAboveAnimator(_ views: [UIView?], translations: [CGVector], delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
+        assert(views.count == translations.count, "views.count != translations.count")
+        let result = InitiallyTranslatedAnimator(views: views, translations: translations, easing: easing)
+        result.delay = delay
+        result.duration = duration
+        return result
+    }
+
     static public func presentFromAboveAnimator(_ views: [UIView?], startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
         assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
         assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
@@ -676,9 +694,17 @@ class HideUntilFullAnimationCompletedAnimator: BaseAnimator {
 @available(iOS 10.0, *)
 open class InitiallyTranslatedAnimator: BaseAnimator {
     var initialTransforms = [UIView: CGAffineTransform]()
-    var initialTranslation = [UIView: CGVector]()
+    var initialTranslations = [UIView: CGVector]()
 
-    required public init(views: [UIView?], easing: Easing = Easing(.quadInOut)) {
+    required public init(views: [UIView?], translations: [CGVector], easing: Easing = Easing(.quadInOut)) {
+        for idx in 0..<translations.count {
+            guard idx < views.count, let v = views[idx] else { continue }
+            initialTranslations[v] = translations[idx]
+        }
+        super.init(views: views, easing: easing)
+    }
+    
+    required public init(views: [UIView?], easing: Easing) {
         super.init(views: views, easing: easing)
     }
     
@@ -687,11 +713,19 @@ open class InitiallyTranslatedAnimator: BaseAnimator {
         enumerateViews { (v, _) in
             if !isReverse {
                 initialTransforms[v] = v.transform
-                let translation = initialTranslation(for: v, container: context.containerView)
+                let translation = resolveInitialTranslation(view: v, container: context.containerView)
                 v.transform = v.transform.translatedBy(x: translation.dx, y: translation.dy)
-                initialTranslation[v] = translation
             }
         }
+    }
+    
+    private func resolveInitialTranslation(view: UIView, container: UIView) -> CGVector {
+        if let translation = initialTranslations[view] {
+            return translation
+        }
+        let translation = initialTranslation(for: view, container: container)
+        initialTranslations[view] = translation
+        return translation
     }
     
     func initialTranslation(for view: UIView, container: UIView) -> CGVector {
@@ -704,14 +738,15 @@ open class InitiallyTranslatedAnimator: BaseAnimator {
         enumerateViews { (v, _) in
             var transform = initialTransforms[v] ?? .identity
             if isReverse {
-                transform = transform.translatedBy(x: initialTranslation[v]?.dx ?? 0.0, y: initialTranslation[v]?.dy ?? 0.0)
+                let translation = resolveInitialTranslation(view: v, container: context.containerView)
+                transform = transform.translatedBy(x: translation.dx, y: translation.dy)
             }
             v.transform = transform
         }
     }
     
     func translation(at time: TimeInterval, for view: UIView, container: UIView, isReversed: Bool) -> CGVector {
-        let initialTranslation = self.initialTranslation[view] ?? .zero
+        let initialTranslation = resolveInitialTranslation(view: view, container: container)
         let start: CGVector = isReversed ? .zero : initialTranslation
         let end: CGVector = isReversed ? initialTranslation : .zero
         let result = Interpolate.value(start: start, end: end, progress: time)
