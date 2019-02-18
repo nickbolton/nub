@@ -3,7 +3,7 @@
 //  Nub
 //
 //  Created by Nick Bolton on 7/19/18.
-//  Copyright © 2018 Stack. All rights reserved.
+//  Copyright © 2018 Pixelbleed LLC. All rights reserved.
 //
 
 import Foundation
