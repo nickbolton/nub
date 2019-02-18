@@ -685,12 +685,7 @@ open class InitiallyTranslatedAnimator: BaseAnimator {
     open override func setupAnimation(context: AnimationContext) {
         super.setupAnimation(context: context)
         enumerateViews { (v, _) in
-            if isReverse {
-                let translation = initialTranslation(for: v, container: context.containerView)
-                v.transform = v.transform.translatedBy(x: translation.dx, y: translation.dy)
-                initialTransforms[v] = v.transform
-                initialTranslation[v] = translation
-            } else {
+            if !isReverse {
                 initialTransforms[v] = v.transform
                 let translation = initialTranslation(for: v, container: context.containerView)
                 v.transform = v.transform.translatedBy(x: translation.dx, y: translation.dy)
@@ -742,6 +737,7 @@ open class InitiallyTranslatedAnimator: BaseAnimator {
 @available(iOS 10.0, *)
 class PresentFromAboveAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
+        guard !isReverse else { return .zero }
         let result = CGVector(dx: 0.0, dy: -(view.convert(view.bounds, to: container).maxY))
         return result
     }
@@ -750,6 +746,7 @@ class PresentFromAboveAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromLeftAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
+        guard !isReverse else { return .zero }
         return CGVector(dx: -(view.convert(view.bounds, to: container).maxX), dy: 0.0)
     }
 }
@@ -757,6 +754,7 @@ class PresentFromLeftAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromBelowAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
+        guard !isReverse else { return .zero }
         return CGVector(dx: 0.0, dy: container.bounds.height - (view.convert(view.bounds, to: container).minY))
     }
 }
@@ -764,6 +762,7 @@ class PresentFromBelowAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromRightAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
+        guard !isReverse else { return .zero }
         let result = CGVector(dx: container.bounds.width - (view.convert(view.bounds, to: container).minX), dy: 0.0)
         return result
     }
