@@ -159,7 +159,33 @@ public struct TextAttributes {
         self.minimumLineHeight = minimumLineHeight
         self.maximumLineHeight = maximumLineHeight
     }
-    
+
+    public init(font: UIFont,
+                textColor: UIColor = .clear,
+                lineHeight: CGFloat = 0.0,
+                kerning: CGFloat = 0.0,
+                paragraphSpacing: CGFloat = 0.0,
+                baselineOffset: CGFloat = 0.0,
+                textAlignment: TextAlignment = .left,
+                verticalAlignment: TextVerticalAlignment = .center,
+                lineBreakMode: NSLineBreakMode = .byWordWrapping,
+                underlineStyle: Int = 0,
+                isStrikeThrough: Bool = false) {
+        self.font = font
+        self.kerning = kerning
+        self.lineHeightMultiple = lineHeight / font.pointSize
+        self.paragraphSpacing = paragraphSpacing
+        self.baselineOffset = baselineOffset
+        self.textAlignment = textAlignment
+        self.verticalAlignment = verticalAlignment
+        self.lineBreakMode = lineBreakMode
+        self.underlineStyle = underlineStyle
+        self.isStrikeThrough = isStrikeThrough
+        self.textColor = textColor
+        self.minimumLineHeight = lineHeight
+        self.maximumLineHeight = lineHeight
+    }
+
     public init(systemFontWeight: SystemFontWeight,
                 pointSize: CGFloat,
                 textColor: UIColor = .clear,

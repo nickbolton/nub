@@ -30,6 +30,18 @@ extension UIButton {
     }
 
     @discardableResult
+    public func alignImageSafeAreaLeft(width: CGFloat, offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        assert(superview != nil, "Not part of any view hierarchy")
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let imageWidth = image(for: .normal)?.size.width ?? 0.0
+        let constant = offset - ((width - imageWidth) / 2.0)
+        let result = leftAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.leftAnchor, constant: constant)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
+    @discardableResult
     public func alignImageLeft(toLeftOf:UIView, width:CGFloat, offset:CGFloat = 0.0) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         let imageWidth = image(for: .normal)?.size.width ?? 0.0
@@ -60,6 +72,18 @@ extension UIButton {
                                         constant: constant)
         NSLayoutConstraint.activate([result])
         
+        return result
+    }
+    
+    @discardableResult
+    public func alignImageSafeAreaRight(width: CGFloat, offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        assert(superview != nil, "Not part of any view hierarchy")
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let imageWidth = image(for: .normal)?.size.width ?? 0.0
+        let constant = offset + ((width - imageWidth) / 2.0)
+        let result = leftAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.leftAnchor, constant: constant)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
         return result
     }
     
@@ -98,6 +122,18 @@ extension UIButton {
     }
     
     @discardableResult
+    public func alignImageSafeAreaTop(height: CGFloat, offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        translatesAutoresizingMaskIntoConstraints = false
+        assert(superview != nil, "Not part of any view hierarchy")
+        let imageHeight = image(for: .normal)?.size.height ?? 0.0
+        let constant = offset - ((height - imageHeight) / 2.0)
+        let result = topAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.topAnchor, constant: constant)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+    
+    @discardableResult
     public func alignImageTop(toTopOf:UIView, height:CGFloat, offset:CGFloat = 0.0) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         let imageHeight = image(for: .normal)?.size.height ?? 0.0
@@ -110,7 +146,6 @@ extension UIButton {
                                         multiplier: 1.0,
                                         constant: constant)
         NSLayoutConstraint.activate([result])
-        
         return result
     }
     
@@ -128,6 +163,18 @@ extension UIButton {
                                         constant: constant)
         NSLayoutConstraint.activate([result])
         
+        return result
+    }
+    
+    @discardableResult
+    public func alignImageSafeAreaBottom(height: CGFloat, offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        assert(superview != nil, "Not part of any view hierarchy")
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let imageHeight = image(for: .normal)?.size.height ?? 0.0
+        let constant = offset + ((height - imageHeight) / 2.0)
+        let result = bottomAnchor.constraint(equalTo: superview!.safeAreaLayoutGuide.bottomAnchor, constant: constant)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
         return result
     }
 

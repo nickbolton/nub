@@ -376,6 +376,22 @@ public extension UIView {
         
         return result
     }
+    
+    @discardableResult
+    public func alignWidth(toHeightOf target: UIView? = nil, offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        let targetView = target ?? superview
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = NSLayoutConstraint(item: self,
+                                        attribute: .width,
+                                        relatedBy: relatedBy,
+                                        toItem: targetView,
+                                        attribute: .height,
+                                        multiplier: 1.0,
+                                        constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
 
     @discardableResult
     public func alignHeight(offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
@@ -419,6 +435,22 @@ public extension UIView {
     }
     
     @discardableResult
+    public func alignHeight(toWidthOf target: UIView? = nil, offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        let targetView = target ?? superview
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = NSLayoutConstraint(item: self,
+                                        attribute: .height,
+                                        relatedBy: relatedBy,
+                                        toItem: targetView,
+                                        attribute: .width,
+                                        multiplier: 1.0,
+                                        constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+    
+    @discardableResult
     public func alignTop(offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         let result = NSLayoutConstraint(item: self,
@@ -433,7 +465,16 @@ public extension UIView {
         
         return result
     }
-    
+
+    @discardableResult
+    public func alignSafeAreaTop(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
     @discardableResult
     public func alignBottom(offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -447,6 +488,15 @@ public extension UIView {
         result.priority = priority
         NSLayoutConstraint.activate([result])
         
+        return result
+    }
+
+    @discardableResult
+    public func alignSafeAreaBottom(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
         return result
     }
 
@@ -467,6 +517,15 @@ public extension UIView {
     }
 
     @discardableResult
+    public func alignSafeAreaBaseline(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = lastBaselineAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
+    @discardableResult
     public func alignLeading(offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         let result = NSLayoutConstraint(item: self,
@@ -482,6 +541,15 @@ public extension UIView {
         return result
     }
     
+    @discardableResult
+    public func alignSafeAreaLeading(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
     @discardableResult
     public func alignLeading(toLeadingOf: UIView, offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -547,6 +615,15 @@ public extension UIView {
     }
     
     @discardableResult
+    public func alignSafeAreaTrailing(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
+    @discardableResult
     public func alignTrailing(toTrailingOf: UIView, offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
         let result = NSLayoutConstraint(item: self,
@@ -609,7 +686,16 @@ public extension UIView {
         
         return result
     }
-        
+    
+    @discardableResult
+    public func alignSafeAreaLeft(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
     @discardableResult
     public func alignRight(offset: CGFloat = 0.0, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -626,6 +712,15 @@ public extension UIView {
         return result
     }
     
+    @discardableResult
+    public func alignSafeAreaRight(offset: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let result = rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: offset)
+        result.priority = priority
+        NSLayoutConstraint.activate([result])
+        return result
+    }
+
     @discardableResult
     public func alignFirstBaseline(toBaselineOf: UIView, relatedBy: NSLayoutConstraint.Relation = .equal, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         return alignFirstBaseline(toBaselineOf: toBaselineOf, offset: 0.0, relatedBy: relatedBy, priority: priority)

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nub"
-  s.version      = "0.0.8"
+  s.version      = "0.0.9"
   s.summary      = "Nub Foundation Library"
 
   s.description  = <<-DESC
@@ -24,6 +24,13 @@ Pod::Spec.new do |s|
   s.subspec "Core" do |s|
     s.source_files = "Source/Core/**/*"
     s.exclude_files = "**/Info*.plist"
+  end
+
+  s.subspec "Animator" do |s|
+    s.ios.source_files = "Source/Animator/**/*.{swift,m,h}"
+    s.dependency "Nub/Core"
+    s.exclude_files = "**/Info*.plist"
+    s.ios.resources = "Source/**/*.xib"
   end
 
   s.subspec "Bootstrap" do |s|

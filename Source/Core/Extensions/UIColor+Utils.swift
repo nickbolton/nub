@@ -73,8 +73,6 @@ extension UIColor {
             break;
         }
         self.init(red: red, green: green, blue: blue, alpha: alpha)
-        let hexString = self.hexString
-        print("hexString: \(hexString)")
     }
     
     private static func colorComponent(from: String, start: Int, length: Int) -> CGFloat {

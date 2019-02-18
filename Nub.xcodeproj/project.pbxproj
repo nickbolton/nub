@@ -68,6 +68,12 @@
 		924B519821C853D000A8464B /* TextDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B519721C853D000A8464B /* TextDescriptor.swift */; };
 		927C832721CAD0DD00BB865C /* UIButton+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832621CAD0DD00BB865C /* UIButton+Layout.swift */; };
 		927C832F21CAE16100BB865C /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832E21CAE16100BB865C /* BaseLabel.swift */; };
+		929154C2221AD6A300899FF0 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C0221AD6A300899FF0 /* Animator.swift */; };
+		929154C3221AD6A300899FF0 /* AnimatorTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C1221AD6A300899FF0 /* AnimatorTransitionManager.swift */; };
+		929154C5221AD6AA00899FF0 /* DisplayLinkAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C4221AD6AA00899FF0 /* DisplayLinkAnimator.swift */; };
+		929154C7221AD6B000899FF0 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C6221AD6B000899FF0 /* Easing.swift */; };
+		929154C9221AD71A00899FF0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C8221AD71900899FF0 /* Math.swift */; };
+		929154CB221AD86000899FF0 /* NSAttributedString+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154CA221AD86000899FF0 /* NSAttributedString+Utils.swift */; };
 		92D9C5E7219CBEEF00F47866 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D9C5E6219CBEEF00F47866 /* Property.swift */; };
 		92E73B602190F2A900AF98B9 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E73B5F2190F2A900AF98B9 /* DataProvider.swift */; };
 		92E73B612190F3ED00AF98B9 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920618EA218D9E3300FB6097 /* Logger.swift */; };
@@ -140,6 +146,12 @@
 		924B519721C853D000A8464B /* TextDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDescriptor.swift; sourceTree = "<group>"; };
 		927C832621CAD0DD00BB865C /* UIButton+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Layout.swift"; sourceTree = "<group>"; };
 		927C832E21CAE16100BB865C /* BaseLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
+		929154C0221AD6A300899FF0 /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		929154C1221AD6A300899FF0 /* AnimatorTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatorTransitionManager.swift; sourceTree = "<group>"; };
+		929154C4221AD6AA00899FF0 /* DisplayLinkAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLinkAnimator.swift; sourceTree = "<group>"; };
+		929154C6221AD6B000899FF0 /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
+		929154C8221AD71900899FF0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		929154CA221AD86000899FF0 /* NSAttributedString+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Utils.swift"; sourceTree = "<group>"; };
 		92D9C5E6219CBEEF00F47866 /* Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Property.swift; sourceTree = "<group>"; };
 		92E73B5F2190F2A900AF98B9 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		9FAACFD082F5C6ED5BB3F1A2 /* Pods-Nub iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nub iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nub iOS/Pods-Nub iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				920618E6218D9E3300FB6097 /* Core */,
+				929154BF221AD68A00899FF0 /* Animator */,
 				92E73B5E2190F20200AF98B9 /* Api */,
 				92061901218DA11B00FB6097 /* Bootstrap */,
 				920618FE218DA09700FB6097 /* Localize */,
@@ -264,12 +277,14 @@
 				927C832621CAD0DD00BB865C /* UIButton+Layout.swift */,
 				9206193D218DC05A00FB6097 /* DispatchQueue+Utils.swift */,
 				9206192D218DBE1200FB6097 /* String+Utils.swift */,
+				929154CA221AD86000899FF0 /* NSAttributedString+Utils.swift */,
 				9206191A218DBD7800FB6097 /* UIViewController+Helpers.swift */,
 				9206191B218DBD7800FB6097 /* UIView+Helpers.swift */,
 				9206191C218DBD7800FB6097 /* UINavigationController+Helpers.swift */,
 				9206192B218DBDE900FB6097 /* UIColor+Utils.swift */,
 				92061930218DBEA800FB6097 /* CGFloat+Utils.swift */,
 				9206192F218DBEA800FB6097 /* Int+Utils.swift */,
+				929154C8221AD71900899FF0 /* Math.swift */,
 				923F615F21C850AF009641AF /* View+Layout.swift */,
 				923E258B21A0623E006143B4 /* OptionSet+Utils.swift */,
 			);
@@ -399,6 +414,17 @@
 				923F615021C84D49009641AF /* View+TextLayout.swift */,
 			);
 			path = Text;
+			sourceTree = "<group>";
+		};
+		929154BF221AD68A00899FF0 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				929154C0221AD6A300899FF0 /* Animator.swift */,
+				929154C1221AD6A300899FF0 /* AnimatorTransitionManager.swift */,
+				929154C4221AD6AA00899FF0 /* DisplayLinkAnimator.swift */,
+				929154C6221AD6B000899FF0 /* Easing.swift */,
+			);
+			path = Animator;
 			sourceTree = "<group>";
 		};
 		92D9C5E5219CBECF00F47866 /* MVVM */ = {
@@ -551,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				923E257A21A05822006143B4 /* ThemedCollectionReusableView.swift in Sources */,
+				929154C3221AD6A300899FF0 /* AnimatorTransitionManager.swift in Sources */,
 				9206193C218DBFB200FB6097 /* Platform.swift in Sources */,
 				9206192E218DBE1200FB6097 /* String+Utils.swift in Sources */,
 				92D9C5E7219CBEEF00F47866 /* Property.swift in Sources */,
@@ -559,9 +586,11 @@
 				92E73B602190F2A900AF98B9 /* DataProvider.swift in Sources */,
 				92061939218DBFB200FB6097 /* InteractionGuard.swift in Sources */,
 				923E258621A061C7006143B4 /* TimeKeeper.swift in Sources */,
+				929154C2221AD6A300899FF0 /* Animator.swift in Sources */,
 				923E257B21A05822006143B4 /* BaseTableViewCell.swift in Sources */,
 				92E73B612190F3ED00AF98B9 /* Logger.swift in Sources */,
 				9206193A218DBFB200FB6097 /* BackgroundTask.swift in Sources */,
+				929154C9221AD71A00899FF0 /* Math.swift in Sources */,
 				92061908218DA23B00FB6097 /* Wireframe.swift in Sources */,
 				92061905218DA11C00FB6097 /* Bootstrap.swift in Sources */,
 				923F615421C84D49009641AF /* TextStyleManager.swift in Sources */,
@@ -580,7 +609,9 @@
 				923E257921A05822006143B4 /* DataReloadingViewController.swift in Sources */,
 				923E257021A05822006143B4 /* PagingCollectionViewFlowLayout.swift in Sources */,
 				923F615E21C84F8F009641AF /* UIFont+Utils.swift in Sources */,
+				929154CB221AD86000899FF0 /* NSAttributedString+Utils.swift in Sources */,
 				9206192A218DBD8000FB6097 /* ThemeManager.swift in Sources */,
+				929154C5221AD6AA00899FF0 /* DisplayLinkAnimator.swift in Sources */,
 				923E254E21A056FA006143B4 /* BaseView.swift in Sources */,
 				92061923218DBD7800FB6097 /* UIView+Helpers.swift in Sources */,
 				92061924218DBD7800FB6097 /* UINavigationController+Helpers.swift in Sources */,
@@ -609,6 +640,7 @@
 				923E256D21A05822006143B4 /* BaseViewController.swift in Sources */,
 				924B519821C853D000A8464B /* TextDescriptor.swift in Sources */,
 				923E257121A05822006143B4 /* ThemedCollectionViewController.swift in Sources */,
+				929154C7221AD6B000899FF0 /* Easing.swift in Sources */,
 				923E257321A05822006143B4 /* CollectionRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

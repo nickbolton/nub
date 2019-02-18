@@ -124,6 +124,10 @@ extension CGSize {
         return CGSize(width: width.halfPointAligned, height: height.halfPointAligned)
     }
     
+    public var area: CGFloat {
+        return width * height
+    }
+    
     public func ceilToPrecision(_ precision: CGFloat) -> CGSize {
         return CGSize(width: width.roundToPrecision(precision), height: height.roundToPrecision(precision))
     }
@@ -257,6 +261,10 @@ extension CGRect {
 }
 
 extension UIEdgeInsets {
+    
+    public var max: CGFloat {
+        return max(max(max(top, bottom), left), right)
+    }
     
     public var cgRect: CGRect {
         return CGRect(x: left,

@@ -58,6 +58,22 @@ public class TextDescriptor: NSObject {
     }
     
     public init(text: String = "",
+                font: UIFont,
+                textColor: UIColor = .clear,
+                lineHeight: CGFloat = 0.0,
+                kerning: CGFloat = 0.0,
+                paragraphSpacing: CGFloat = 0.0,
+                baselineOffset: CGFloat = 0.0,
+                textAlignment: TextAlignment = .left,
+                verticalAlignment: TextVerticalAlignment = .center,
+                lineBreakMode: NSLineBreakMode = .byWordWrapping,
+                underlineStyle: Int = 0,
+                isStrikeThrough: Bool = false) {
+        self.text = text
+        self.textAttributes = TextAttributes(font: font, textColor: textColor, lineHeight: lineHeight, kerning: kerning, paragraphSpacing: paragraphSpacing, baselineOffset: baselineOffset, textAlignment: textAlignment, verticalAlignment: verticalAlignment, lineBreakMode: lineBreakMode, underlineStyle: underlineStyle, isStrikeThrough: isStrikeThrough)
+    }
+    
+    public init(text: String = "",
                 systemFontWeight: SystemFontWeight,
                 pointSize: CGFloat,
                 textColor: UIColor = .clear,
