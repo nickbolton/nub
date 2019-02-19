@@ -116,7 +116,7 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
     public var isRevealing = true
     public var isInteractive = false
     public var isVerbose = false
-    public var setupOnly = false
+    public var isSetupOnly = false
     
     private func animators(for key: String) -> [Animator] {
         return allAnimatorsDict[key] ?? []
@@ -265,7 +265,7 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
             return
         }
         
-        guard !setupOnly else {
+        guard !isSetupOnly else {
             return
         }
     

@@ -149,13 +149,22 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     // MARK: Status Bar
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        if isThemeable {
-            return ThemeManager.shared.currentTheme().statusBarStyle
-        }
-        return statusBarStyle
+        return isThemeable ? ThemeManager.shared.currentTheme().statusBarStyle : statusBarStyle
     }
     
-    public var isStatusBarHidden = false { didSet { setNeedsStatusBarAppearanceUpdate() } }
+    private var _isStatusBarHidden = false
+    public var isStatusBarHidden: Bool {
+        get {
+            let result = isThemeable ?
+                ThemeManager.shared.currentTheme().isStatusBarHidden :
+                _isStatusBarHidden
+            return result
+        }
+        set {
+            _isStatusBarHidden = newValue
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     public var statusBarStyle = UIStatusBarStyle.lightContent
     public var statusBarAnimation = UIStatusBarAnimation.fade
     override open var prefersStatusBarHidden: Bool { return isStatusBarHidden }

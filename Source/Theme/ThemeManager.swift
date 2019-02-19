@@ -21,6 +21,7 @@ public protocol Theme {
     var appTint: UIColor { get }
     var defaultAnimationDuration: TimeInterval { get }
     var statusBarStyle: UIStatusBarStyle { get }
+    var isStatusBarHidden: Bool { get }
     var keyboardAppearance: UIKeyboardAppearance { get }
     var fontScale: CGFloat { get set }
     var headlineFont: UIFont { get }
@@ -31,6 +32,7 @@ public protocol Theme {
 open class DefaultTheme: Theme {
     public var fontScale: CGFloat = 1.0
     public var name: String = ""
+    public var isStatusBarHidden = false
     public var defaultTextColor: UIColor = UIColor.white.color(withAlpha: 0.85)
     public var defaultBackgroundColor: UIColor = .black
     public var greyTextColor: UIColor = UIColor(hex: 0x808080).color(withAlpha: 0.6)
