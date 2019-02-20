@@ -58,6 +58,7 @@ public class DisplayLinkAnimator: NSObject {
     
     public func start() {
         guard !isInteractive else { return }
+        _tearDownDisplayLink()
         startTime = CACurrentMediaTime()
         isCanceling = false
         didCallCompletionHandler = false
@@ -94,6 +95,7 @@ public class DisplayLinkAnimator: NSObject {
     private func _setupDisplayLink() {
         displayLink = CADisplayLink(target: self, selector: #selector(_tickAnimation))
         displayLink?.add(to: RunLoop.main, forMode: .common)
+        displayLink?.isPaused = false
     }
     
     private func _tearDownDisplayLink() {
