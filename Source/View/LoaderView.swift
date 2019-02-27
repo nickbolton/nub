@@ -54,6 +54,7 @@ public class LoaderView: BaseView {
         backgroundColor = .clear
         initializeBackgroundView()
         translatesAutoresizingMaskIntoConstraints = false
+        progressImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override public func assembleViews() {
