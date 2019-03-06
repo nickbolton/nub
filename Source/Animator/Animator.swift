@@ -140,7 +140,7 @@ extension UIView {
         return result
     }
 
-    static public func transformAnimation(_ views: [UIView?], startScale: CGPoint = UIView.unscaled, endScale: CGPoint = UIView.unscaled, startAngle: CGFloat = 0, endAngle: CGFloat = 0, startTranslation: CGVector = .zero, endTranslation: CGVector = .zero, startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
+    static public func transformAnimation(_ views: [UIView?], applyToInitialTransforms: Bool = false, startScale: CGPoint = UIView.unscaled, endScale: CGPoint = UIView.unscaled, startAngle: CGFloat = 0, endAngle: CGFloat = 0, startTranslation: CGVector = .zero, endTranslation: CGVector = .zero, startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
         assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
         assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
         assert(startingAt <= endingAt, "startingAt \(startingAt) > endingAt \(endingAt)")
@@ -149,7 +149,7 @@ extension UIView {
         result.endingAt = endingAt
         return result
     }
-    static public func transformAnimation(_ views: [UIView?], startScale: CGPoint = UIView.unscaled, endScale: CGPoint = UIView.unscaled, startAngle: CGFloat = 0, endAngle: CGFloat = 0, startTranslation: CGVector = .zero, endTranslation: CGVector = .zero, delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
+    static public func transformAnimation(_ views: [UIView?], applyToInitialTransforms: Bool = false, startScale: CGPoint = UIView.unscaled, endScale: CGPoint = UIView.unscaled, startAngle: CGFloat = 0, endAngle: CGFloat = 0, startTranslation: CGVector = .zero, endTranslation: CGVector = .zero, delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
         let result = TransformAnimator(views: views, startScale: startScale, startAngle: startAngle, startTranslation: startTranslation, endScale: endScale, endAngle: endAngle, endTranslation: endTranslation, easing: easing)
         result.delay = delay
         result.duration = duration

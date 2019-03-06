@@ -68,6 +68,11 @@
 		924B519821C853D000A8464B /* TextDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924B519721C853D000A8464B /* TextDescriptor.swift */; };
 		924CA263222D56490054BAD7 /* StyledLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA262222D56490054BAD7 /* StyledLabel.swift */; };
 		924CA267222D58C80054BAD7 /* StyledTextCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA266222D58C80054BAD7 /* StyledTextCollectionReusableView.swift */; };
+		924CA2852230199D0054BAD7 /* SerialOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA2802230199D0054BAD7 /* SerialOperationQueue.swift */; };
+		924CA2862230199D0054BAD7 /* OperationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA2812230199D0054BAD7 /* OperationGroup.swift */; };
+		924CA2872230199D0054BAD7 /* OperationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA2822230199D0054BAD7 /* OperationsManager.swift */; };
+		924CA2882230199D0054BAD7 /* RetryingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA2832230199D0054BAD7 /* RetryingOperation.swift */; };
+		924CA2892230199D0054BAD7 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924CA2842230199D0054BAD7 /* BaseOperation.swift */; };
 		927C832721CAD0DD00BB865C /* UIButton+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832621CAD0DD00BB865C /* UIButton+Layout.swift */; };
 		927C832F21CAE16100BB865C /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927C832E21CAE16100BB865C /* BaseLabel.swift */; };
 		929154C2221AD6A300899FF0 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929154C0221AD6A300899FF0 /* Animator.swift */; };
@@ -148,6 +153,11 @@
 		924B519721C853D000A8464B /* TextDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextDescriptor.swift; sourceTree = "<group>"; };
 		924CA262222D56490054BAD7 /* StyledLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledLabel.swift; sourceTree = "<group>"; };
 		924CA266222D58C80054BAD7 /* StyledTextCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledTextCollectionReusableView.swift; sourceTree = "<group>"; };
+		924CA2802230199D0054BAD7 /* SerialOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialOperationQueue.swift; sourceTree = "<group>"; };
+		924CA2812230199D0054BAD7 /* OperationGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationGroup.swift; sourceTree = "<group>"; };
+		924CA2822230199D0054BAD7 /* OperationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationsManager.swift; sourceTree = "<group>"; };
+		924CA2832230199D0054BAD7 /* RetryingOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryingOperation.swift; sourceTree = "<group>"; };
+		924CA2842230199D0054BAD7 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		927C832621CAD0DD00BB865C /* UIButton+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Layout.swift"; sourceTree = "<group>"; };
 		927C832E21CAE16100BB865C /* BaseLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
 		929154C0221AD6A300899FF0 /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
@@ -213,6 +223,7 @@
 				920618FE218DA09700FB6097 /* Localize */,
 				92061903218DA11C00FB6097 /* Locker */,
 				920618E9218D9E3300FB6097 /* Logger */,
+				924CA27F2230199D0054BAD7 /* Operations */,
 				923F614D21C84D24009641AF /* Text */,
 				923E254821A056E8006143B4 /* View */,
 				923E255121A0577A006143B4 /* ViewController */,
@@ -422,6 +433,18 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		924CA27F2230199D0054BAD7 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				924CA2802230199D0054BAD7 /* SerialOperationQueue.swift */,
+				924CA2812230199D0054BAD7 /* OperationGroup.swift */,
+				924CA2822230199D0054BAD7 /* OperationsManager.swift */,
+				924CA2832230199D0054BAD7 /* RetryingOperation.swift */,
+				924CA2842230199D0054BAD7 /* BaseOperation.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
 		929154BF221AD68A00899FF0 /* Animator */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,9 +619,12 @@
 				923E257B21A05822006143B4 /* BaseTableViewCell.swift in Sources */,
 				924CA263222D56490054BAD7 /* StyledLabel.swift in Sources */,
 				92E73B612190F3ED00AF98B9 /* Logger.swift in Sources */,
+				924CA2852230199D0054BAD7 /* SerialOperationQueue.swift in Sources */,
+				924CA2882230199D0054BAD7 /* RetryingOperation.swift in Sources */,
 				9206193A218DBFB200FB6097 /* BackgroundTask.swift in Sources */,
 				929154C9221AD71A00899FF0 /* Math.swift in Sources */,
 				92061908218DA23B00FB6097 /* Wireframe.swift in Sources */,
+				924CA2872230199D0054BAD7 /* OperationsManager.swift in Sources */,
 				92061905218DA11C00FB6097 /* Bootstrap.swift in Sources */,
 				923F615421C84D49009641AF /* TextStyleManager.swift in Sources */,
 				92061900218DA09700FB6097 /* Localize.swift in Sources */,
@@ -636,8 +662,10 @@
 				923E257C21A05822006143B4 /* BaseCollectionViewCell.swift in Sources */,
 				923E257221A05822006143B4 /* BaseCollectionViewLayout.swift in Sources */,
 				923F615321C84D49009641AF /* NSLayoutConstraint+TextLayout.swift in Sources */,
+				924CA2892230199D0054BAD7 /* BaseOperation.swift in Sources */,
 				923E259A21A0640F006143B4 /* CollectionViewController2.swift in Sources */,
 				923E257F21A05822006143B4 /* ThemedTableCell.swift in Sources */,
+				924CA2862230199D0054BAD7 /* OperationGroup.swift in Sources */,
 				927C832F21CAE16100BB865C /* BaseLabel.swift in Sources */,
 				923E258221A05C75006143B4 /* View+Animation.swift in Sources */,
 				923F616021C850AF009641AF /* View+Layout.swift in Sources */,
