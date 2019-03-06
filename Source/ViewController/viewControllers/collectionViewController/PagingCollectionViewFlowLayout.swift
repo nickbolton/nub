@@ -27,7 +27,7 @@ open class PagingCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    var isFastPaging: Bool = false
+    var isFastPaging: Bool = true
     
     open override func targetContentOffset(forProposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         

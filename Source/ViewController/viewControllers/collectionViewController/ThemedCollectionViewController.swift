@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class ThemedCollectionViewController<VT:CollectionRootView, DT:CollectionItem>: CollectionViewController<VT, DT> {
+open class ThemedCollectionViewController<VT:CollectionRootView>: CollectionViewController<VT> {
     open override func viewDidLoad() {
         setupTheme()
         super.viewDidLoad()

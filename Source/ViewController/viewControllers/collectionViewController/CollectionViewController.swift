@@ -10,9 +10,10 @@ import UIKit
 
 public protocol DataSourceHaving {
     func collectionItem(at indexPath: IndexPath) -> CollectionItem?
+    var dataSource: [[CollectionItem]]? { get }
 }
 
-open class CollectionViewController<VT:CollectionRootView, DT:CollectionItem>: DataReloadingViewController<VT, UICollectionViewCell, DT>, DataSourceHaving {
+open class CollectionViewController<VT:CollectionRootView>: DataReloadingViewController<VT, UICollectionViewCell, CollectionItem>, DataSourceHaving {
     
     public var collectionView: UICollectionView { return rootView.collectionView }
     open override var dataView: UIView { return collectionView }
@@ -43,7 +44,7 @@ open class CollectionViewController<VT:CollectionRootView, DT:CollectionItem>: D
     
     // MARK: Data Source
 
-    open override func dataSourceItem(for cell: UICollectionViewCell) -> DT? {
+    open override func dataSourceItem(for cell: UICollectionViewCell) -> CollectionItem? {
         if let indexPath = collectionView.indexPath(for: cell) {
             return dataSourceItem(at: indexPath)
         }
@@ -76,10 +77,6 @@ open class CollectionViewController<VT:CollectionRootView, DT:CollectionItem>: D
     // MARK: UICollectionViewDataSource Conformance
 
     @objc public func numberOfSectionsInCollectionView(_ collectionView: UICollectionView) -> Int {
-//        return numberOfSections(in: collectionView)
-//    }
-//    
-//    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         if let dataSource = self.dataSource {
             return dataSource.count
         }

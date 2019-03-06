@@ -9,7 +9,7 @@ import UIKit
 
 open class BaseLabel: UILabel, ThemeableView {
 
-    private var didAddMissingConstraints = false;
+    private var didAddMissingConstraints = false
     private(set) public var isThemeable = false
     
     public convenience init() {

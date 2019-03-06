@@ -10,13 +10,13 @@ import UIKit
 
 open class BaseCollectionViewLayout: UICollectionViewLayout {
 
-    private let collectionViewCellKind = "collectionViewCellKind"
-    private let collectionViewSupplimentaryKind = "collectionViewSupplimentaryKind"
-    private let collectionViewDecorationKind = "collectionViewDecorationKind"
+    let collectionViewCellKind = "collectionViewCellKind"
+    let collectionViewSupplimentaryKind = "collectionViewSupplimentaryKind"
+    let collectionViewDecorationKind = "collectionViewDecorationKind"
 
     public weak var viewController: UIViewController?
     public var minContentSize: CGSize = .zero
-    public var isDebugging = true
+    public var isDebugging = false
     
     public var layoutInfo: Dictionary<String, Dictionary<IndexPath, UICollectionViewLayoutAttributes>>?
     public var oldLayoutInfo: Dictionary<String, Dictionary<IndexPath, UICollectionViewLayoutAttributes>>?
@@ -36,24 +36,24 @@ open class BaseCollectionViewLayout: UICollectionViewLayout {
         let orientation = UIDevice.current.orientation
         
         if (orientation.isLandscape) {
-            minContentSize = CGSize(width: screenBounds.height, height: screenBounds.width);
+            minContentSize = CGSize(width: screenBounds.height, height: screenBounds.width)
         } else {
             minContentSize = screenBounds.size
         }
     }
     
-    open func configure(attributes: UICollectionViewLayoutAttributes, with item: CollectionItem, at indexPath:IndexPath ) {
-        attributes.transform3D = item.transform3D;
-        attributes.transform = item.transform;
-        attributes.alpha = item.alpha;
-        attributes.zIndex = item.zIndex;
-        attributes.isHidden = item.isHidden;
+    open func configure(attributes: inout UICollectionViewLayoutAttributes, with item: CollectionItem, at indexPath:IndexPath ) {
+        attributes.transform3D = item.transform3D
+        attributes.transform = item.transform
+        attributes.alpha = item.alpha
+        attributes.zIndex = item.zIndex
+        attributes.isHidden = item.isHidden
         
         if (item.useCenter) {
-            attributes.size = item.size;
-            attributes.center = item.center;
+            attributes.size = item.size
+            attributes.center = item.center
         } else {
-            attributes.frame = frameForItem(at: indexPath)
+            attributes.frame = frame(for: item)
         }
         item.indexPath = indexPath
     }
@@ -81,23 +81,24 @@ open class BaseCollectionViewLayout: UICollectionViewLayout {
     }
     
     open override func prepare() {
-        oldLayoutInfo = layoutInfo;
+        oldLayoutInfo = layoutInfo
     
         var newLayoutInfo = [String: Dictionary<IndexPath, UICollectionViewLayoutAttributes>]()
         var cellLayoutInfo = [IndexPath: UICollectionViewLayoutAttributes]()
 //        var supplimentaryLayoutInfo = [IndexPath: UICollectionViewLayoutAttributes]()
 //        var decorationLayoutInfo = [IndexPath: UICollectionViewLayoutAttributes]()
         
-        enumerateCollectionItems { (ip, attribues, item) in
-            if let item = item {
-                configure(attributes: attribues, with: item, at: ip)
+        enumerateCollectionItems { (ip, attr, item) in
+            var attributes = attr
+            if var item = item {
+                configure(attributes: &attributes, with: item, at: ip)
             }
-            cellLayoutInfo[ip] = attribues
+            cellLayoutInfo[ip] = attributes
         }
         
-        newLayoutInfo[collectionViewCellKind] = cellLayoutInfo;
-//        newLayoutInfo[collectionViewSupplimentaryKind] = supplimentaryLayoutInfo;
-//        newLayoutInfo[collectionViewDecorationKind] = decorationLayoutInfo;
+        newLayoutInfo[collectionViewCellKind] = cellLayoutInfo
+//        newLayoutInfo[collectionViewSupplimentaryKind] = supplimentaryLayoutInfo
+//        newLayoutInfo[collectionViewDecorationKind] = decorationLayoutInfo
         
         if isDebugging {
             Logger.shared.debug("layoutInfo: \(newLayoutInfo)")
@@ -120,12 +121,11 @@ open class BaseCollectionViewLayout: UICollectionViewLayout {
         var frame = CGRect.zero
         frame.origin = item.point
         frame.size = item.size
-        
-        return frame;
+        return frame
     }
     
     open func shouldInclude(attributes: UICollectionViewLayoutAttributes, at indexPath: IndexPath, in rect: CGRect) -> Bool {
-        return rect.intersects(attributes.frame);
+        return rect.intersects(attributes.frame)
     }
     
     open override func layoutAttributesForElements(in rect: CGRect) -> Array<UICollectionViewLayoutAttributes> {
@@ -182,42 +182,42 @@ open class BaseCollectionViewLayout: UICollectionViewLayout {
         var y: CGFloat = 0.0
     
         if (item.useCenter) {
-            x = item.center.x + (item.size.width / 2.0);
-            y = item.center.y + (item.size.height / 2.0);
+            x = item.center.x + (item.size.width / 2.0)
+            y = item.center.y + (item.size.height / 2.0)
         } else {
-            x = item.point.x + item.size.width;
-            y = item.point.y + item.size.height;
+            x = item.point.x + item.size.width
+            y = item.point.y + item.size.height
         }
         
-        //    x += item.contentSizeOffset.width;
-        //    y += item.contentSizeOffset.height;
+        //    x += item.contentSizeOffset.width
+        //    y += item.contentSizeOffset.height
         
         //    if (item.supplimentaryItem != nil) {
         //
         //        // resursion
         //
-        //        CGPoint p = [self maxPointOfItem:item.supplimentaryItem];
+        //        CGPoint p = [self maxPointOfItem:item.supplimentaryItem]
         //
-        //        x = MAX(x, p.x);
-        //        y = MAX(y, p.y);
+        //        x = MAX(x, p.x)
+        //        y = MAX(y, p.y)
         //    }
         //
         //    if (item.decorationItem != nil) {
         //
         //        // resursion
         //
-        //        CGPoint p = [self maxPointOfItem:item.decorationItem];
+        //        CGPoint p = [self maxPointOfItem:item.decorationItem]
         //
-        //        x = MAX(x, p.x);
-        //        y = MAX(y, p.y);
+        //        x = MAX(x, p.x)
+        //        y = MAX(y, p.y)
         //    }
         
-        return CGPoint(x: x, y: y);
+        return CGPoint(x: x, y: y)
     }
    
     open override var collectionViewContentSize: CGSize {
         get {
-            guard let vc = viewController as? CollectionViewController else {
+            guard let vc = viewController as? DataSourceHaving else {
                 return minContentSize
             }
             

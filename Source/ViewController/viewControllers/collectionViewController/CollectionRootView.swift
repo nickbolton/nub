@@ -36,7 +36,7 @@ open class CollectionRootView: BaseView {
         
     }
     
-    private func initializeCollectionView() {
+    open func initializeCollectionView() {
         flowLayout.minimumInteritemSpacing = 0.0;
         flowLayout.minimumLineSpacing = 0.0;
         
