@@ -239,9 +239,14 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
             animators.append(contentsOf: self.animators)
             allAnimatorsDict[transitionContext.transitionKey] = animators
         }
-                
+        
+        animators = animators.filter { anim in
+            (isPresenting && anim.directionMask.contains(.forward)) ||
+            (!isPresenting && anim.directionMask.contains(.reverse))
+        }
+
         for var anim in animators {
-            anim.isReverse = !self.isPresenting
+            anim.isReverse = !isPresenting
             anim.setupAnimation(context: self.transitionContext)
         }
         

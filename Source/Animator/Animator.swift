@@ -14,6 +14,19 @@ public enum AnimatorType {
     case displayLink
 }
 
+public struct AnimationDirection: OptionSet {
+    public var rawValue: Int
+    public typealias RawValue = Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    public static let forward = AnimationDirection(rawValue: 1 << 0)
+    public static let reverse = AnimationDirection(rawValue: 1 << 1)
+    public static let both = AnimationDirection.forward.union(.reverse)
+}
+
 @available(iOS 10.0, *)
 public protocol Animator {
     var tag: Int { get set }
@@ -28,12 +41,14 @@ public protocol Animator {
     var delay: TimeInterval { get set }
     var reverseStartingAt: TimeInterval { get }
     var reverseEndingAt: TimeInterval { get }
+    var directionMask: AnimationDirection { get }
     func setupAnimation(context: AnimationContext)
     func performAnimations(context: AnimationContext)
     func performAnimations(at: TimeInterval, context: AnimationContext)
     func completeAnimation(context: AnimationContext)
     func cancelAnimation(context: AnimationContext)
     func enumerateViews(_ handler: (UIView, Int)->Void)
+    func set(direction: AnimationDirection) -> Animator
 }
 
 @available(iOS 10.0, *)
@@ -119,6 +134,38 @@ extension UIView {
     }
     static public func morphingLabelAnimation(_ from: UILabel?, to: UILabel?, crossFade: Bool, delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
         let result = MorphingLabelAnimator(from: from, to: to, isCrossFading: crossFade, easing: easing)
+        result.delay = delay
+        result.duration = duration
+        return result
+    }
+
+    static public func animateFrame(_ view: UIView, start: CGRect, end: CGRect, startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
+        assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
+        assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
+        assert(startingAt <= endingAt, "startingAt \(startingAt) > endingAt \(endingAt)")
+        let result = FrameAnimator(view: view, startFrame: start, endFrame: end, easing: easing)
+        result.startingAt = startingAt
+        result.endingAt = endingAt
+        return result
+    }
+    static public func animateFrame(_ view: UIView, start: CGRect, end: CGRect, delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
+        let result = FrameAnimator(view: view, startFrame: start, endFrame: end, easing: easing)
+        result.delay = delay
+        result.duration = duration
+        return result
+    }
+    
+    static public func animateCornerRadius(_ view: UIView, start: CGFloat, end: CGFloat, startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> Animator {
+        assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
+        assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
+        assert(startingAt <= endingAt, "startingAt \(startingAt) > endingAt \(endingAt)")
+        let result = CornerRadiusAnimator(view: view, start: start, end: end, easing: easing)
+        result.startingAt = startingAt
+        result.endingAt = endingAt
+        return result
+    }
+    static public func animateCornerRadius(_ view: UIView, start: CGFloat, end: CGFloat, delay: TimeInterval = 0.0, duration: TimeInterval, easing: Easing = Easing(.quadInOut)) -> Animator {
+        let result = CornerRadiusAnimator(view: view, start: start, end: end, easing: easing)
         result.delay = delay
         result.duration = duration
         return result
@@ -493,6 +540,7 @@ open class BaseAnimator: NSObject, Animator {
     let views: [UIView?]
     var snapshots = [UIView: UIView?]()
     var hiddenViews = Set<UIView>()
+    public var directionMask = AnimationDirection.both
     public var isReverse = false
     public var isDisabled = false
     public var duration: TimeInterval = 0.0 { didSet { if duration < 0.0 { duration = 0.0 } } }
@@ -513,6 +561,11 @@ open class BaseAnimator: NSObject, Animator {
     }
     
     public func copy() -> Animator {
+        return self
+    }
+    
+    public func set(direction: AnimationDirection) -> Animator {
+        directionMask = direction
         return self
     }
     
@@ -772,7 +825,6 @@ open class InitiallyTranslatedAnimator: BaseAnimator {
 @available(iOS 10.0, *)
 class PresentFromAboveAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
-        guard !isReverse else { return .zero }
         let result = CGVector(dx: 0.0, dy: -(view.convert(view.bounds, to: container).maxY))
         return result
     }
@@ -781,7 +833,6 @@ class PresentFromAboveAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromLeftAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
-        guard !isReverse else { return .zero }
         return CGVector(dx: -(view.convert(view.bounds, to: container).maxX), dy: 0.0)
     }
 }
@@ -789,7 +840,6 @@ class PresentFromLeftAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromBelowAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
-        guard !isReverse else { return .zero }
         return CGVector(dx: 0.0, dy: container.bounds.height - (view.convert(view.bounds, to: container).minY))
     }
 }
@@ -797,9 +847,88 @@ class PresentFromBelowAnimator: InitiallyTranslatedAnimator {
 @available(iOS 10.0, *)
 class PresentFromRightAnimator: InitiallyTranslatedAnimator {
     override func initialTranslation(for view: UIView, container: UIView) -> CGVector {
-        guard !isReverse else { return .zero }
         let result = CGVector(dx: container.bounds.width - (view.convert(view.bounds, to: container).minX), dy: 0.0)
         return result
+    }
+}
+
+@available(iOS 10.0, *)
+class FrameAnimator: BaseAnimator {
+    var startFrame = CGRect.zero
+    var endFrame = CGRect.zero
+
+    required init(view: UIView, startFrame: CGRect, endFrame: CGRect, easing: Easing = Easing(.quadInOut)) {
+        super.init(views: [view], easing: easing)
+        self.startFrame = startFrame
+        self.endFrame = endFrame
+    }
+    
+    required public init(views: [UIView?], easing: Easing) {
+        fatalError("init(views:easing:) has not been implemented")
+    }
+    
+    open override func setupAnimation(context: AnimationContext) {
+        super.setupAnimation(context: context)
+        enumerateViews { (v, idx) in v.frame = isReverse ? endFrame : startFrame }
+    }
+    
+    open override func performAnimations(context: AnimationContext) {
+        super.performAnimations(context: context)
+        enumerateViews { (v, idx) in v.frame = isReverse ? startFrame : endFrame }
+    }
+    
+    open override func cancelAnimation(context: AnimationContext) {
+        enumerateViews { (v, idx) in v.frame = isReverse ? endFrame : startFrame }
+        super.cancelAnimation(context: context)
+    }
+    
+    open override func performAnimations(at time: TimeInterval, context: AnimationContext) {
+        super.performAnimations(at: time, context: context)
+        enumerateViews { (v, idx) in
+            let startFrame = isReverse ? self.endFrame : self.startFrame
+            let endFrame = isReverse ? self.startFrame : self.endFrame
+            v.frame = Interpolate.value(start: startFrame, end: endFrame, progress: time)
+        }
+    }
+}
+
+@available(iOS 10.0, *)
+class CornerRadiusAnimator: BaseAnimator {
+    var start: CGFloat = 0.0
+    var end: CGFloat = 0.0
+    
+    required init(view: UIView, start: CGFloat, end: CGFloat, easing: Easing = Easing(.quadInOut)) {
+        super.init(views: [view], easing: easing)
+        self.start = start
+        self.end = end
+    }
+    
+    required public init(views: [UIView?], easing: Easing) {
+        fatalError("init(views:easing:) has not been implemented")
+    }
+    
+    open override func setupAnimation(context: AnimationContext) {
+        super.setupAnimation(context: context)
+        enumerateViews { (v, idx) in v.layer.cornerRadius = isReverse ? end : start }
+    }
+    
+    open override func performAnimations(context: AnimationContext) {
+        super.performAnimations(context: context)
+        enumerateViews { (v, idx) in v.layer.cornerRadius = isReverse ? start : end }
+    }
+    
+    open override func cancelAnimation(context: AnimationContext) {
+        enumerateViews { (v, idx) in v.layer.cornerRadius = isReverse ? end : start }
+        super.cancelAnimation(context: context)
+    }
+    
+    open override func performAnimations(at time: TimeInterval, context: AnimationContext) {
+        super.performAnimations(at: time, context: context)
+        enumerateViews { (v, idx) in
+            let startFrame = isReverse ? self.end : self.start
+            let endFrame = isReverse ? self.start : self.end
+            v.layer.cornerRadius = Interpolate.value(start: start, end: end, progress: time)
+        }
     }
 }
 

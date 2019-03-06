@@ -29,6 +29,10 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     private(set) public var isThemeable = false
     public var shouldMonitoringReachability = false
     private var isMonitoringReachability = false
+    
+    public var theme: Theme?
+    
+    private var currentTheme: Theme { return theme ?? ThemeManager.shared.currentTheme() }
 
     public var isBackgroundTransparent = false { didSet { updateTheme() } }
     public let interactionGuard = InteractionGuard()
@@ -149,15 +153,13 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     // MARK: Status Bar
     
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return isThemeable ? ThemeManager.shared.currentTheme().statusBarStyle : statusBarStyle
+        return isThemeable ? currentTheme.statusBarStyle : statusBarStyle
     }
     
     private var _isStatusBarHidden = false
     public var isStatusBarHidden: Bool {
         get {
-            let result = isThemeable ?
-                ThemeManager.shared.currentTheme().isStatusBarHidden :
-                _isStatusBarHidden
+            let result = isThemeable ? currentTheme.isStatusBarHidden : _isStatusBarHidden
             return result
         }
         set {
@@ -180,7 +182,7 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
         if isBackgroundTransparent {
             view.backgroundColor = .clear
         } else {
-            view.backgroundColor = ThemeManager.shared.currentTheme().defaultBackgroundColor
+            view.backgroundColor = currentTheme.defaultBackgroundColor
         }
         view.window?.backgroundColor = view.backgroundColor
         setNeedsStatusBarAppearanceUpdate()
@@ -192,7 +194,7 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     public func transitionTheme() {
         guard isThemeable else { return }
         if ThemeManager.shared.selectedName != LockerManager.shared.defaultLocker.themeName {
-            UIView.transition(with: view, duration: ThemeManager.shared.currentTheme().defaultAnimationDuration, options: UIView.defaultTransitionOptions, animations: {
+            UIView.transition(with: view, duration: currentTheme.defaultAnimationDuration, options: UIView.defaultTransitionOptions, animations: {
                 ThemeManager.shared.selectThemeNamed(LockerManager.shared.defaultLocker.themeName)
             })
         }
