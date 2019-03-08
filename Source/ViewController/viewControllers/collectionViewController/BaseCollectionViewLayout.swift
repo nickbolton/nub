@@ -215,49 +215,49 @@ open class BaseCollectionViewLayout: UICollectionViewLayout {
         return CGPoint(x: x, y: y)
     }
    
-    open override var collectionViewContentSize: CGSize {
-        get {
-            guard let vc = viewController as? DataSourceHaving else {
-                return minContentSize
-            }
-            
-            guard let dataSource = vc.dataSource else {
-                return minContentSize
-            }
-            
-            var bottomMostPosition: CGFloat = 0.0
-            var rightMostPosition: CGFloat = 0.0
-            var sizeSet = false
-            
-            for items in dataSource {
-                for item in items {
-                    
-                    sizeSet = true
-                    
-                    let p = maxPoint(of: item)
-                    
-                    rightMostPosition = max(rightMostPosition, p.x)
-                    bottomMostPosition = max(bottomMostPosition, p.y)
-                }
-            }
-            
-            var width = minContentSize.width
-            var height = minContentSize.height
-            
-            if sizeSet {
-                width = max(width, rightMostPosition)
-                height = max(height, bottomMostPosition)
-            } else {
-                Logger.shared.warning("No items in datasource!")
-            }
-            
-            let size = CGSize(width: width, height: height)
-            if (self.isDebugging) {
-                Logger.shared.debug("content size: \(size)")
-            }
-            
-            return size
+    open override var collectionViewContentSize: CGSize { return calculateContentSize() }
+    
+    open func calculateContentSize() -> CGSize {
+        guard let vc = viewController as? DataSourceHaving else {
+            return minContentSize
         }
+        
+        guard let dataSource = vc.dataSource else {
+            return minContentSize
+        }
+        
+        var bottomMostPosition: CGFloat = 0.0
+        var rightMostPosition: CGFloat = 0.0
+        var sizeSet = false
+        
+        for items in dataSource {
+            for item in items {
+                
+                sizeSet = true
+                
+                let p = maxPoint(of: item)
+                
+                rightMostPosition = max(rightMostPosition, p.x)
+                bottomMostPosition = max(bottomMostPosition, p.y)
+            }
+        }
+        
+        var width = minContentSize.width
+        var height = minContentSize.height
+        
+        if sizeSet {
+            width = max(width, rightMostPosition)
+            height = max(height, bottomMostPosition)
+        } else {
+            Logger.shared.warning("No items in datasource!")
+        }
+        
+        let size = CGSize(width: width, height: height)
+        if (self.isDebugging) {
+            Logger.shared.debug("content size: \(size)")
+        }
+        
+        return size
     }
     
     open override func initialLayoutAttributesForAppearingItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

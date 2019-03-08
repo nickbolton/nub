@@ -460,6 +460,10 @@ extension UIView {
         return HideUntilFullAnimationCompletedAnimator(views: views)
     }
     
+    static public func noopAnimation() -> Animator {
+        return BaseAnimator(views: [])
+    }
+    
     static public func presentStaggered(_ views: [[UIView?]], horizontalTranslation: CGFloat = 0, verticalTranslation: CGFloat = 0, isPartitioned: Bool = true, startingAt: TimeInterval = 0.0, endingAt: TimeInterval = 1.0, easing: Easing = Easing(.quadInOut)) -> [Animator] {
         assert(startingAt >= 0.0 && startingAt <= 1.0, "startingAt (\(startingAt)) is out of range")
         assert(endingAt >= 0.0 && endingAt <= 1.0, "endingAt (\(endingAt)) is out of range")
@@ -537,7 +541,9 @@ extension UIView {
 @available(iOS 10.0, *)
 open class BaseAnimator: NSObject, Animator {
     
-    let views: [UIView?]
+    public static var defaultAnimatorType = AnimatorType.displayLink
+    
+    public let views: [UIView?]
     var snapshots = [UIView: UIView?]()
     var hiddenViews = Set<UIView>()
     public var directionMask = AnimationDirection.both
@@ -552,7 +558,7 @@ open class BaseAnimator: NSObject, Animator {
     public var reverseStartingAt: TimeInterval = 1.0
     public var reverseEndingAt: TimeInterval = 0.0
     public var tag: Int = 0
-    public var type: AnimatorType = .displayLink
+    public var type: AnimatorType = BaseAnimator.defaultAnimatorType
 
     required public init(views: [UIView?] = [], easing: Easing = Easing(.quadInOut)) {
         self.views = views

@@ -287,7 +287,24 @@ public extension UIView {
         let verticalConstraint = expandHeight(insets: insets, priority: priority)
         result.append(contentsOf: horizontalConstraint)
         result.append(contentsOf: verticalConstraint)
-        
+        return result
+    }
+    
+    @discardableResult
+    public func align(to target: UIView? = nil, insets:UIEdgeInsets = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+        guard let targetView = target ?? superview else {
+            assert(false, "View must be part of a view hierarchy if no target view is specified.")
+            return []
+        }
+        var result = Array<NSLayoutConstraint>()
+        let leftConstraint = alignLeft(toLeftOf: targetView, offset: insets.left, priority: priority)
+        let rightConstraint = alignRight(toRightOf: targetView, offset: -insets.right, priority: priority)
+        let topConstraint = alignTop(toTopOf: targetView, offset: insets.top, priority: priority)
+        let bottomConstraint = alignBottom(toBottomOf: targetView, offset: -insets.bottom, priority: priority)
+        result.append(leftConstraint)
+        result.append(rightConstraint)
+        result.append(topConstraint)
+        result.append(bottomConstraint)
         return result
     }
     

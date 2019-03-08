@@ -35,6 +35,10 @@ public class DisplayLinkAnimator: NSObject {
     public var interactiveCompletionDuration: TimeInterval = 0.0
     private var didCallCompletionHandler = false
     
+    private var tickTimestamps = [TimeInterval]()
+    private var tickDurations = [TimeInterval]()
+    private var lastTimestamp: TimeInterval = 0.0
+    
     public var isPaused: Bool { get { return displayLink?.isPaused ?? false } set { displayLink?.isPaused = isPaused } }
     
     public var isRunning: Bool {
@@ -62,6 +66,9 @@ public class DisplayLinkAnimator: NSObject {
         startTime = CACurrentMediaTime()
         isCanceling = false
         didCallCompletionHandler = false
+        lastTimestamp = Date.timeIntervalSinceReferenceDate
+        tickTimestamps.removeAll()
+        tickDurations.removeAll()
         _setupDisplayLink()
     }
     
@@ -99,14 +106,24 @@ public class DisplayLinkAnimator: NSObject {
     }
     
     private func _tearDownDisplayLink() {
+        for i in 0..<tickTimestamps.count {
+            print("\(tickTimestamps[i]):\t\(tickDurations[i])")
+        }
+        print("duration: \(totalDuration)")
+        print("ticks: \(tickTimestamps.count)")
         displayLink?.isPaused = true
         displayLink?.invalidate()
         displayLink = nil
+        tickTimestamps.removeAll()
     }
 
     @objc internal func _tickAnimation() {
         guard let displayLink = displayLink else { return }
         guard !displayLink.isPaused else { return }
+        
+        let now = Date.timeIntervalSinceReferenceDate
+        tickTimestamps.append(now - lastTimestamp)
+        lastTimestamp = now
         
         var duration = totalDuration
         
@@ -158,6 +175,8 @@ public class DisplayLinkAnimator: NSObject {
         if displayLink.timestamp + animationsElapsedTime > displayLink.targetTimestamp {
             DispatchQueue.global().async { Logger.shared.warning("animation tick took too long!! \(animationsElapsedTime)") }
         }
+        
+        tickDurations.append(Date.timeIntervalSinceReferenceDate - now)
         
         if (isCanceling && time <= 0.0) || (!isCanceling && time >= 1.0) {
             lastInteractivePercent = 0.0

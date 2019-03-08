@@ -117,6 +117,9 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
     public var isInteractive = false
     public var isVerbose = false
     public var isSetupOnly = false
+    public var isCancelled = false
+    
+    public var completionBlock: DefaultHandler?
     
     private func animators(for key: String) -> [Animator] {
         return allAnimatorsDict[key] ?? []
@@ -156,6 +159,15 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
         if !isInteractive {
             doAnimation(using: contextTransitioning)
         }
+    }
+    
+    public func animate(from: TransitionAnimatable,
+                        to: TransitionAnimatable,
+                        duration: TimeInterval,
+                        onComplete: DefaultHandler? = nil) {
+        completionBlock = onComplete
+        let toView = to.viewController.view!
+        doAnimation(fromVC: from, toVC: to, toView: toView, container: toView, duration: duration)
     }
     
     private weak var contextTransitioning: UIViewControllerContextTransitioning?
@@ -211,6 +223,14 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
         toView.isHidden = isRevealing
 
         let duration = self.transitionDuration(using: contextTransitioning)
+        doAnimation(fromVC: fromVC, toVC: toVC, toView: toView, container: container, duration: duration)
+    }
+    
+    private func doAnimation(fromVC: TransitionAnimatable,
+                             toVC: TransitionAnimatable,
+                             toView: UIView,
+                             container: UIView,
+                             duration: TimeInterval) {
         
         transitionContext.processedSetupViews.removeAll()
         transitionContext.transitionManager = self
@@ -335,8 +355,7 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
     private func completeTransition(_ isCompleted: Bool) {
         isInteractive = false
         guard !isCompletionDisabled else { return }
-        guard let contextTransitioning = contextTransitioning else { return }
-        transitionContext.isCompleted = !contextTransitioning.transitionWasCancelled
+        transitionContext.isCompleted = !(contextTransitioning?.transitionWasCancelled ?? isCancelled)
         _ = animators(for: transitionContext.transitionKey).map { $0.completeAnimation(context: transitionContext) }
         
         let fromTransitionAnimatable = transitionContext.resolvedFrom
@@ -361,7 +380,8 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
         if (!isPresenting && transitionContext.isCompleted) || (isPresenting && !transitionContext.isCompleted) {
             allAnimatorsDict.removeValue(forKey: transitionContext.transitionKey)
         }
-        contextTransitioning.completeTransition(transitionContext.isCompleted)
+        contextTransitioning?.completeTransition(transitionContext.isCompleted)
+        completionBlock?()
     }
     
     @discardableResult
@@ -386,6 +406,7 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
         }
     
         var animators = [UIViewPropertyAnimator]()
+        var remainingCompletionCount = timingBuckets.values.count
         
         for bucket in timingBuckets.values {
             var animator = UIViewPropertyAnimator(duration: duration, timingParameters: bucket.first!.easing.cubicTimingParameters!)
@@ -397,7 +418,10 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
             }
             
             animator.addCompletion { position in
-                onComplete()
+                remainingCompletionCount -= 1
+                if remainingCompletionCount <= 0 {
+                    onComplete()
+                }
             }
             
             animator.startAnimation()
