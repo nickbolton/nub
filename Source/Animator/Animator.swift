@@ -983,6 +983,7 @@ class FadeInAnimator: BaseAnimator {
         super.setupAnimation(context: context)
         enumerateViews { (v, _) in
             if isReverse {
+                assert(!context.isViewProcessed(v, animator: self), "view included in multiple fadeIn animations: \(v)")
                 startAlphas[v] = v.alpha
                 endAlphas[v] = 0.0
             } else {
@@ -990,7 +991,10 @@ class FadeInAnimator: BaseAnimator {
                 startAlphas[v] = 0.0
                 endAlphas[v] = v.alpha
             }
-            context.markViewProcessed(v, animator: self)
+            if (context.isReversed && directionMask.contains(.reverse)) ||
+               (!context.isReversed && directionMask.contains(.forward)) {
+                context.markViewProcessed(v, animator: self)
+            }
         }
         if !isReverse {
             enumerateViews { (v, _) in v.alpha = 0.0 }

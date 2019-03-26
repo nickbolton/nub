@@ -109,4 +109,10 @@ extension String {
         let emailTest:NSPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
     }
+    
+    public var isValidHttpURL: Bool {
+        let regEx = "((https|http)://)?((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
+        return predicate.evaluate(with: self)
+    }
 }

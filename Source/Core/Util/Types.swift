@@ -11,3 +11,8 @@ import Foundation
 public typealias DefaultHandler = (() -> Void)
 public typealias DefaultFailureHandler = ((Error?) -> Void)
 public typealias BooleanResultHandler = ((Bool) -> Void)
+
+public struct SuccessFailure {
+    let onSuccess: DefaultHandler
+    let onFailure: DefaultFailureHandler
+}
