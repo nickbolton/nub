@@ -23,6 +23,23 @@ extension UIColor {
         return result
     }
     
+    public var brightnessFactor: CGFloat {
+        var red: CGFloat = 0.0
+        var green: CGFloat = 0.0
+        var blue: CGFloat = 0.0
+        
+        getRed(&red, green: &green, blue: &blue, alpha: nil)
+        
+        red *= 255.0
+        green *= 255.0
+        blue *= 255.0
+
+        return sqrt(
+            (red * red * 0.241) +
+            (green * green * 0.691) +
+            (blue * blue * 0.068))
+    }
+    
     public convenience init(hex: Int32, alpha: CGFloat = 1.0) {
         let red = CGFloat((hex >> 16) & 0xFF)
         let green = CGFloat((hex >> 8) & 0xFF)

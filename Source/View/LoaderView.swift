@@ -14,7 +14,7 @@ public class LoaderView: BaseView {
     
     private let backgroundView = UIView()
     private let progressImageView = UIImageView()
-    private var isAnimating = false
+    private (set) public var isAnimating = false
     private var ignoringInteractionCount = 0
     
     private let rotationAnimationKey = "rotationAnimation"
