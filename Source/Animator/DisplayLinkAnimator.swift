@@ -106,11 +106,6 @@ public class DisplayLinkAnimator: NSObject {
     }
     
     private func _tearDownDisplayLink() {
-        for i in 0..<tickTimestamps.count {
-            print("\(tickTimestamps[i]):\t\(tickDurations[i])")
-        }
-        print("duration: \(totalDuration)")
-        print("ticks: \(tickTimestamps.count)")
         displayLink?.isPaused = true
         displayLink?.invalidate()
         displayLink = nil
