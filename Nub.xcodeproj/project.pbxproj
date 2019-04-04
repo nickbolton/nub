@@ -30,6 +30,11 @@
 		9206193B218DBFB200FB6097 /* PerformOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92061936218DBFB200FB6097 /* PerformOnce.swift */; };
 		9206193C218DBFB200FB6097 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92061937218DBFB200FB6097 /* Platform.swift */; };
 		9206193E218DC05A00FB6097 /* DispatchQueue+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9206193D218DC05A00FB6097 /* DispatchQueue+Utils.swift */; };
+		921E1971225629E300B28CC6 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E196C225629E200B28CC6 /* BaseTextField.swift */; };
+		921E1972225629E300B28CC6 /* ConstrainingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E196D225629E300B28CC6 /* ConstrainingLabel.swift */; };
+		921E1973225629E300B28CC6 /* ConstrainingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E196E225629E300B28CC6 /* ConstrainingTextField.swift */; };
+		921E1974225629E300B28CC6 /* ConstrainingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E196F225629E300B28CC6 /* ConstrainingTextView.swift */; };
+		921E1975225629E300B28CC6 /* BaseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921E1970225629E300B28CC6 /* BaseTextView.swift */; };
 		923E254D21A056FA006143B4 /* BaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923E254921A056FA006143B4 /* BaseImageView.swift */; };
 		923E254E21A056FA006143B4 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923E254A21A056FA006143B4 /* BaseView.swift */; };
 		923E254F21A056FA006143B4 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923E254B21A056FA006143B4 /* BaseButton.swift */; };
@@ -115,6 +120,11 @@
 		92061936218DBFB200FB6097 /* PerformOnce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformOnce.swift; sourceTree = "<group>"; };
 		92061937218DBFB200FB6097 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		9206193D218DC05A00FB6097 /* DispatchQueue+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Utils.swift"; sourceTree = "<group>"; };
+		921E196C225629E200B28CC6 /* BaseTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
+		921E196D225629E300B28CC6 /* ConstrainingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstrainingLabel.swift; sourceTree = "<group>"; };
+		921E196E225629E300B28CC6 /* ConstrainingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstrainingTextField.swift; sourceTree = "<group>"; };
+		921E196F225629E300B28CC6 /* ConstrainingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstrainingTextView.swift; sourceTree = "<group>"; };
+		921E1970225629E300B28CC6 /* BaseTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTextView.swift; sourceTree = "<group>"; };
 		923E254921A056FA006143B4 /* BaseImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseImageView.swift; sourceTree = "<group>"; };
 		923E254A21A056FA006143B4 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		923E254B21A056FA006143B4 /* BaseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
@@ -344,6 +354,11 @@
 				923E254A21A056FA006143B4 /* BaseView.swift */,
 				923E254C21A056FA006143B4 /* LoaderView.swift */,
 				927C832E21CAE16100BB865C /* BaseLabel.swift */,
+				921E196C225629E200B28CC6 /* BaseTextField.swift */,
+				921E1970225629E300B28CC6 /* BaseTextView.swift */,
+				921E196D225629E300B28CC6 /* ConstrainingLabel.swift */,
+				921E196E225629E300B28CC6 /* ConstrainingTextField.swift */,
+				921E196F225629E300B28CC6 /* ConstrainingTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -627,11 +642,15 @@
 				924CA2872230199D0054BAD7 /* OperationsManager.swift in Sources */,
 				92061905218DA11C00FB6097 /* Bootstrap.swift in Sources */,
 				923F615421C84D49009641AF /* TextStyleManager.swift in Sources */,
+				921E1973225629E300B28CC6 /* ConstrainingTextField.swift in Sources */,
 				92061900218DA09700FB6097 /* Localize.swift in Sources */,
 				92061927218DBD7800FB6097 /* Types.swift in Sources */,
 				923F615721C84D49009641AF /* TextMetricsCache.swift in Sources */,
+				921E1975225629E300B28CC6 /* BaseTextView.swift in Sources */,
+				921E1972225629E300B28CC6 /* ConstrainingLabel.swift in Sources */,
 				923F615521C84D49009641AF /* View+TextLayout.swift in Sources */,
 				923E254F21A056FA006143B4 /* BaseButton.swift in Sources */,
+				921E1974225629E300B28CC6 /* ConstrainingTextView.swift in Sources */,
 				923F615621C84D49009641AF /* TextStyle.swift in Sources */,
 				923E258C21A0623E006143B4 /* OptionSet+Utils.swift in Sources */,
 				923E257721A05822006143B4 /* TableRootView.swift in Sources */,
@@ -677,6 +696,7 @@
 				924B519821C853D000A8464B /* TextDescriptor.swift in Sources */,
 				923E257121A05822006143B4 /* ThemedCollectionViewController.swift in Sources */,
 				929154C7221AD6B000899FF0 /* Easing.swift in Sources */,
+				921E1971225629E300B28CC6 /* BaseTextField.swift in Sources */,
 				923E257321A05822006143B4 /* CollectionRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
