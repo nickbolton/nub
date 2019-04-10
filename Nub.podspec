@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nub"
-  s.version      = "0.0.23"
+  s.version      = "0.0.24"
   s.summary      = "Nub Foundation Library"
 
   s.description  = <<-DESC

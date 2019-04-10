@@ -28,7 +28,6 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     private(set) public var isAppearing = false
     private(set) public var isThemeable = false
     public var shouldMonitoringReachability = false
-    private var isMonitoringReachability = false
     
     public var theme: Theme?
     
@@ -202,7 +201,7 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     
     // MARK: Reachability
     
-    private (set) var reachability = Reachability()
+    private (set) public var reachability = Reachability()
     
     public func startReachability() {
         do {
