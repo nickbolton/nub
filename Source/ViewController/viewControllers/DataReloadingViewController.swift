@@ -97,6 +97,7 @@ open class DataReloadingViewController<T:UIView, CT, DT>: BaseViewController<T> 
     func _reloadData() {
         guard !isReloadingData else { return }
         isReloadingData = true
+        willReloadData()
         
         let asyncOperation =
             buildDataSource(success: { [weak self] (dataSource) in
@@ -117,6 +118,9 @@ open class DataReloadingViewController<T:UIView, CT, DT>: BaseViewController<T> 
     private func finishedReloadingData() {
         isReloadingData = false
         didReloadData()
+    }
+    
+    open func willReloadData() {
     }
     
     open func didReloadData() {

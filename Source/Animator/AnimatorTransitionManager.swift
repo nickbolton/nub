@@ -364,13 +364,21 @@ public class AnimatorTransitionManager: UIPercentDrivenInteractiveTransition, UI
         if transitionContext.isCompleted {
             transitionContext.from.finishTransition(with: transitionContext)
             transitionContext.to.finishTransition(with: transitionContext)
-            fromTransitionAnimatable.finishTransition(with: transitionContext)
-            toTransitionAnimatable.finishTransition(with: transitionContext)
+            if fromTransitionAnimatable !== transitionContext.from {
+                fromTransitionAnimatable.finishTransition(with: transitionContext)
+            }
+            if toTransitionAnimatable !== transitionContext.to {
+                toTransitionAnimatable.finishTransition(with: transitionContext)
+            }
         } else {
             transitionContext.from.cancelTransition(with: transitionContext)
             transitionContext.to.cancelTransition(with: transitionContext)
-            fromTransitionAnimatable.cancelTransition(with: transitionContext)
-            toTransitionAnimatable.cancelTransition(with: transitionContext)
+            if fromTransitionAnimatable !== transitionContext.from {
+                fromTransitionAnimatable.cancelTransition(with: transitionContext)
+            }
+            if toTransitionAnimatable !== transitionContext.to {
+                toTransitionAnimatable.cancelTransition(with: transitionContext)
+            }
         }
         if !isPresenting {
             selectedIndexPath = nil
