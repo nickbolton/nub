@@ -14,6 +14,23 @@ public protocol ThemeableView {
     var isThemeable: Bool { get }
 }
 
+public extension UIView {
+    
+    public func updateAllThemeableViews() {
+        traverseViewHeirarchy {
+            guard let v = $0 as? ThemeableView else { return }
+            v.updateTheme()
+        }
+    }
+    
+    public func traverseViewHeirarchy(_ handler: (UIView)->Void) {
+        handler(self)
+        subviews.forEach {
+            $0.traverseViewHeirarchy(handler)
+        }
+    }
+}
+
 open class BaseView: UIView, ThemeableView {
     
     private (set) public var didAddMissingConstraints = false

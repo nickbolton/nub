@@ -10,7 +10,7 @@ import UIKit
 
 open class CollectionItem: NSObject {
 
-    public var useCenter = false;
+    public var useCenter = false
     public var entity: Any?
     public var indexPath: IndexPath?
     

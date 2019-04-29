@@ -37,11 +37,11 @@ open class CollectionRootView: BaseView {
     }
     
     open func initializeCollectionView() {
-        flowLayout.minimumInteritemSpacing = 0.0;
-        flowLayout.minimumLineSpacing = 0.0;
+        flowLayout.minimumInteritemSpacing = 0.0
+        flowLayout.minimumLineSpacing = 0.0
         
         if !itemSize.equalTo(.zero) {
-            flowLayout.itemSize = itemSize;
+            flowLayout.itemSize = itemSize
         }
         
         let layout = customLayout ?? flowLayout

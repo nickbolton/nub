@@ -9,7 +9,7 @@
 #if os(iOS)
 import UIKit
 #else
-import Cocoa
+import UIKit
 #endif
 
 extension CGFloat {
@@ -285,6 +285,12 @@ extension UIEdgeInsets {
                             left: left.normalize(by: scale),
                             bottom: bottom.normalize(by: scale),
                             right: right.normalize(by: scale))
+    }
+}
+
+extension CGVector {
+    public func scale(by scale: CGFloat) -> CGVector {
+        return CGVector(dx: dx.scale(by: scale), dy: dy.scale(by: scale))
     }
 }
 

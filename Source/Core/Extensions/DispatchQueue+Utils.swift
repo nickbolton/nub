@@ -22,7 +22,7 @@ extension DispatchQueue {
         let deadline = DispatchTime.now() + timeInterval
         asyncAfter(deadline: deadline, execute: work)
     }
-    
+        
     public func execute(minCompletionDelay minDelay: TimeInterval, execute work: @convention(block) () -> Swift.Void, onComplete: @escaping @convention(block) () -> Swift.Void) {
         let startTime = Date.timeIntervalSinceReferenceDate
         work()
