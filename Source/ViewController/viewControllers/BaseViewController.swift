@@ -34,7 +34,7 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     private var currentTheme: Theme { return theme ?? ThemeManager.shared.currentTheme() }
 
     public var isBackgroundTransparent = false { didSet { updateTheme() } }
-    public let interactionGuard = InteractionGuard()
+    public var interactionGuard = InteractionGuard()
     let upVerticalSwipe = UISwipeGestureRecognizer(target: nil, action: nil)
     let downVerticalSwipe = UISwipeGestureRecognizer(target: nil, action: nil)
     public var isThemeGesturesEnabled = true {
