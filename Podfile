@@ -6,7 +6,7 @@ target 'Nub iOS' do
   pod 'SwiftyBeaver', '~> 1.4'
   pod 'FXKeychain', '~> 1.5'
   pod 'Siesta', '~> 1.4'
-  pod 'ReachabilitySwift', '~> 4.1'
+  pod 'ReachabilitySwift', '~> 4.3'
   pod 'Cache', '~> 4.1'
 end
 

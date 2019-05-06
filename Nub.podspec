@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Core"
     s.dependency "Siesta", "~> 1.4"
     s.dependency "Elevate", "~> 3.0"
-    s.dependency "ReachabilitySwift", "~> 4.1"
+    s.dependency "ReachabilitySwift", "~> 4.3"
     s.exclude_files = "**/Info*.plist"
     s.ios.resources = "Source/**/*.xib"
   end
@@ -104,6 +104,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Logger"
     s.dependency "Nub/Locker"
     s.dependency "Nub/Operations"
+    s.dependency "ReachabilitySwift", "~> 4.3"
     s.exclude_files = "**/Info*.plist"
     s.ios.resources = "Source/**/*.xib"
   end
