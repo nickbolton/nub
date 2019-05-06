@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nub"
-  s.version      = "0.0.27"
+  s.version      = "0.0.28"
   s.summary      = "Nub Foundation Library"
 
   s.description  = <<-DESC
@@ -100,7 +100,6 @@ Pod::Spec.new do |s|
   s.subspec "ViewController" do |s|
     s.ios.source_files = "Source/ViewController/**/*.{swift,m,h}"
     s.dependency "Nub/Core"
-    s.dependency "Nub/Api"
     s.dependency "Nub/View"
     s.dependency "Nub/Logger"
     s.dependency "Nub/Locker"
@@ -125,16 +124,12 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "iOSApplication" do |s|
-    s.dependency "Nub/Core"
     s.dependency "Nub/Bootstrap"
-    s.dependency "Nub/Locker"
     s.dependency "Nub/Localize"
-    s.dependency "Nub/Api"
     s.dependency "Nub/Animator"
     s.dependency "Nub/Text"
     s.dependency "Nub/ViewController"
     s.dependency "Nub/MVVM"
-    s.dependency "Nub/Logger"
     s.exclude_files = "**/Info*.plist"
   end
 
