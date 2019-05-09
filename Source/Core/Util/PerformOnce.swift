@@ -12,7 +12,7 @@ public class PerformOnce: NSObject {
 
     private var didPerform = false
     
-    func perform(_ handler: DefaultHandler) {
+    func perform(_ handler: (()->Void)) {
         guard !didPerform else { return }
         handler()
         didPerform = true

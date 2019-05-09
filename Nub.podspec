@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Nub"
-  s.version      = "0.0.28"
+  s.version      = "0.0.30"
   s.summary      = "Nub Foundation Library"
 
   s.description  = <<-DESC
@@ -26,19 +26,12 @@ Pod::Spec.new do |s|
     s.exclude_files = "**/Info*.plist"
   end
 
-  s.subspec "Animator" do |s|
-    s.ios.source_files = "Source/Animator/**/*.{swift,m,h}"
-    s.dependency "Nub/Core"
-    s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
-  end
-
   s.subspec "Bootstrap" do |s|
     s.ios.source_files = "Source/Bootstrap/**/*.{swift,m,h}"
     s.dependency "Nub/Core"
     s.dependency "Nub/Theme"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Bootstrap/**/*.xib"
   end
 
   s.subspec "Locker" do |s|
@@ -46,7 +39,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Core"
     s.dependency "FXKeychain", "~> 1.5"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Locker/**/*.xib"
   end
 
   s.subspec "Localize" do |s|
@@ -54,7 +47,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Core"
     s.dependency "Nub/Theme"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Localize/**/*.xib"
   end
 
   s.subspec "Logger" do |s|
@@ -62,14 +55,14 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Core"
     s.dependency "SwiftyBeaver", "~> 1.4"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Logger/**/*.xib"
   end
 
   s.subspec "Operations" do |s|
     s.ios.source_files = "Source/Operations/**/*.{swift,m,h}"
     s.dependency "Nub/Core"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Operations/**/*.xib"
   end
 
   s.subspec "Api" do |s|
@@ -79,14 +72,14 @@ Pod::Spec.new do |s|
     s.dependency "Elevate", "~> 3.0"
     s.dependency "ReachabilitySwift", "~> 4.3"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Api/**/*.xib"
   end
 
   s.subspec "Theme" do |s|
     s.ios.source_files = "Source/Theme/**/*.{swift,m,h}"
     s.dependency "Nub/Core"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/Theme/**/*.xib"
   end
 
   s.subspec "View" do |s|
@@ -94,7 +87,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Theme"
     s.dependency "SnapKit", "~> 4.0"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/View/**/*.xib"
   end
 
   s.subspec "ViewController" do |s|
@@ -106,14 +99,7 @@ Pod::Spec.new do |s|
     s.dependency "Nub/Operations"
     s.dependency "ReachabilitySwift", "~> 4.3"
     s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
-  end
-
-  s.subspec "MVVM" do |s|
-    s.ios.source_files = "Source/MVVM/**/*.{swift,m,h}"
-    s.dependency "Nub/Core"
-    s.exclude_files = "**/Info*.plist"
-    s.ios.resources = "Source/**/*.xib"
+    s.ios.resources = "Source/ViewController/**/*.xib"
   end
 
   s.subspec "Text" do |s|
@@ -127,10 +113,8 @@ Pod::Spec.new do |s|
   s.subspec "iOSApplication" do |s|
     s.dependency "Nub/Bootstrap"
     s.dependency "Nub/Localize"
-    s.dependency "Nub/Animator"
     s.dependency "Nub/Text"
     s.dependency "Nub/ViewController"
-    s.dependency "Nub/MVVM"
     s.exclude_files = "**/Info*.plist"
   end
 

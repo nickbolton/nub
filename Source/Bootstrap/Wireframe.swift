@@ -49,8 +49,8 @@ open class Wireframe: NSObject, SFSafariViewControllerDelegate {
                                from: UIViewController,
                                wrapInNav: Bool = false,
                                animated: Bool = true,
-                               completion: DefaultHandler? = nil) {
-        let targetVC = wrapInNav ? vc.wrapInNavigationController() : vc
+                               completion: (()->Void)? = nil) {
+        let targetVC = wrapInNav ? UINavigationController(rootViewController: vc) : vc
         lastPresentedViewController = vc
         from.present(targetVC, animated: animated, completion: completion)
     }
@@ -61,7 +61,7 @@ open class Wireframe: NSObject, SFSafariViewControllerDelegate {
         target.dismiss(animated: animated, completion: completion)
     }
     
-    public func presentModalWindow(withVC: UIViewController, windowLevel: UIWindow.Level = UIWindow.Level.statusBar - 1, animated: Bool = true, animations: DefaultHandler? = nil, completion: DefaultHandler? = nil) {
+    public func presentModalWindow(withVC: UIViewController, windowLevel: UIWindow.Level = UIWindow.Level.statusBar - 1, animated: Bool = true, animations: (()->Void)? = nil, completion: (()->Void)? = nil) {
         
         if self.modalWindow != nil {
             return
@@ -87,7 +87,7 @@ open class Wireframe: NSObject, SFSafariViewControllerDelegate {
         })
     }
     
-    public func dismissModalWindow(animated: Bool = true, animations: DefaultHandler? = nil, completion: DefaultHandler? = nil) {
+    public func dismissModalWindow(animated: Bool = true, animations: (()->Void)? = nil, completion: (()->Void)? = nil) {
      
         guard let window = modalWindow else {
             completion?()

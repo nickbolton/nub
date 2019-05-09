@@ -8,7 +8,7 @@
 
 import UIKit
 
-public typealias RetryingSuccessHandler = ((DefaultHandler?) -> Void)
+public typealias RetryingSuccessHandler = (((()->Void)?) -> Void)
 public typealias RetryingFailureHandler = ((Error?, Bool, Bool) -> Void)
 
 open class RetryingOperation: Operation {
@@ -17,8 +17,8 @@ open class RetryingOperation: Operation {
     
     open override var isAsynchronous: Bool { return true }
     public var returnOnMainThread = true
-    public var successHandler: DefaultHandler?
-    public var failureHandler: DefaultFailureHandler?
+    public var successHandler: (()->Void)?
+    public var failureHandler: ((Error?)->Void)?
     open var minimumExecutionTime: TimeInterval { return 0.0 }
     public var maxRetries = 2
     
@@ -94,6 +94,12 @@ open class RetryingOperation: Operation {
     open func shouldExecuteOperation() -> (Bool, Error?) {
         return (true, nil)
     }
+  
+    private func randomRetryDuration() -> Double {
+        let min = 3.0
+        let max = 5.0
+        return (Double(arc4random()) / Double(0xFFFFFFFF)) * (max - min) + min
+    }
     
     private func executeMainWithRetryCount() {
         
@@ -108,20 +114,22 @@ open class RetryingOperation: Operation {
             self?.succeeded = true
             self?.finish(onSuccess)
             }, onFailure: { [weak self] (error, shouldRetry, immediateRetry) in
-                self?.error = error
-                self?.retryCount += 1
+                guard let `self` = self else { return }
+                self.error = error
+                self.retryCount += 1
                 if shouldRetry {
-                    let delay = immediateRetry ? 0.0 : Double.random(min: 3.0, max: 5.0)
-                    DispatchQueue.main.asyncAfter(timeInterval: delay) {
-                        self?.executeMainWithRetryCount()
+                    let delay = immediateRetry ? 0.0 : self.randomRetryDuration()
+                    let deadline = DispatchTime.now() + delay
+                    DispatchQueue.main.asyncAfter(deadline: deadline) {
+                        self.executeMainWithRetryCount()
                     }
                 } else {
-                    self?.callFailureHandler()
+                    self.callFailureHandler()
                 }
         })
     }
     
-    private func finish(_ onSuccess: DefaultHandler?) {
+    private func finish(_ onSuccess: (()->Void)?) {
         isExecuting = false
         isFinished = true
         
@@ -134,7 +142,7 @@ open class RetryingOperation: Operation {
         }
     }
     
-    private func callCompletionHandler(_ onSuccess: DefaultHandler?) {
+    private func callCompletionHandler(_ onSuccess: (()->Void)?) {
         if succeeded {
             callSuccessHandler(onSuccess)
         } else {
@@ -142,13 +150,14 @@ open class RetryingOperation: Operation {
         }
     }
     
-    private func callSuccessHandler(_ onSuccess: DefaultHandler?) {
+    private func callSuccessHandler(_ onSuccess: (()->Void)?) {
         let endTime = Date.timeIntervalSinceReferenceDate
         let duration = endTime - startTime
         let remainingTime = max(minimumExecutionTime - duration, 0.0)
         let successHandler = self.successHandler
         if remainingTime > 0.0 {
-            DispatchQueue.main.asyncAfter(timeInterval: remainingTime) {
+            let deadline = DispatchTime.now() + remainingTime
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
                 onSuccess?()
                 successHandler?()
             }

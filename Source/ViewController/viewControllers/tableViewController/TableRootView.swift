@@ -44,7 +44,12 @@ open class TableRootView: BaseView {
                 tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
                 ])
         } else {
-            tableView.expand()
+            NSLayoutConstraint.activate([
+                tableView.leftAnchor.constraint(equalTo: leftAnchor),
+                tableView.rightAnchor.constraint(equalTo: rightAnchor),
+                tableView.topAnchor.constraint(equalTo: topAnchor),
+                tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+              ])
         }
     }
 }

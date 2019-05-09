@@ -34,7 +34,6 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     private var currentTheme: Theme { return theme ?? ThemeManager.shared.currentTheme() }
 
     public var isBackgroundTransparent = false { didSet { updateTheme() } }
-    public var interactionGuard = InteractionGuard()
     let upVerticalSwipe = UISwipeGestureRecognizer(target: nil, action: nil)
     let downVerticalSwipe = UISwipeGestureRecognizer(target: nil, action: nil)
     public var isThemeGesturesEnabled = true {
@@ -193,7 +192,11 @@ open class BaseViewController<T:UIView>: UIViewController, StatusBarManaging, Di
     public func transitionTheme() {
         guard isThemeable else { return }
         if ThemeManager.shared.selectedName != LockerManager.shared.defaultLocker.themeName {
-            UIView.transition(with: view, duration: currentTheme.defaultAnimationDuration, options: UIView.defaultTransitionOptions, animations: {
+            let options = UIView.AnimationOptions.curveEaseInOut
+              .union(.beginFromCurrentState)
+              .union(.allowAnimatedContent)
+              .union(.transitionCrossDissolve)
+            UIView.transition(with: view, duration: currentTheme.defaultAnimationDuration, options: options, animations: {
                 ThemeManager.shared.selectThemeNamed(LockerManager.shared.defaultLocker.themeName)
             })
         }

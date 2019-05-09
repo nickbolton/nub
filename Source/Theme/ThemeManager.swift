@@ -14,11 +14,7 @@ extension Notification.Name {
 
 public protocol Theme {
     var name: String { get }
-    var defaultTextColor: UIColor { get }
     var defaultBackgroundColor: UIColor { get }
-    var greyTextColor: UIColor { get }
-    var dividerColor: UIColor { get }
-    var appTint: UIColor { get }
     var defaultAnimationDuration: TimeInterval { get }
     var statusBarStyle: UIStatusBarStyle { get }
     var isStatusBarHidden: Bool { get }
@@ -33,11 +29,7 @@ open class DefaultTheme: Theme {
     public var fontScale: CGFloat = 1.0
     public var name: String = ""
     public var isStatusBarHidden = false
-    public var defaultTextColor: UIColor = UIColor.white.color(withAlpha: 0.85)
     public var defaultBackgroundColor: UIColor = .black
-    public var greyTextColor: UIColor = UIColor(hex: 0x808080).color(withAlpha: 0.6)
-    public var dividerColor: UIColor = UIColor(hex: 0x808080).color(withAlpha: 0.2)
-    public var appTint: UIColor = UIColor(hex: 0x008DFA)
     public var defaultAnimationDuration: TimeInterval { return 0.3 }
     public var statusBarStyle: UIStatusBarStyle = .default
     public var keyboardAppearance: UIKeyboardAppearance = .light
@@ -54,10 +46,7 @@ open class DefaultLightTheme: DefaultTheme {
     public override init() {
         super.init()
         self.name = ThemeManager.defaultLightThemeName
-        self.defaultTextColor = .black
         self.defaultBackgroundColor = .white
-        self.appTint = UIColor(hex: 0x008DFA)
-        self.dividerColor = UIColor(hex: 0x808080).color(withAlpha: 0.1)
         self.statusBarStyle = .default
         self.keyboardAppearance = .light
     }
@@ -67,10 +56,7 @@ open class DefaultDarkTheme: DefaultTheme {
     public override init() {
         super.init()
         self.name = ThemeManager.defaultDarkThemeName
-        self.defaultTextColor = UIColor.white.color(withAlpha: 0.85)
         self.defaultBackgroundColor = .black
-        self.appTint = UIColor(hex: 0x008DFA)
-        self.dividerColor = UIColor(hex: 0x808080).color(withAlpha: 0.2)
         self.statusBarStyle = .lightContent
         self.keyboardAppearance = .dark
     }
@@ -150,7 +136,7 @@ public class ThemeManager: NSObject {
 
     public func registerTheme(_ theme: Theme) {
         themes[theme.name] = theme
-        if selectedName.length <= 0 {
+        if selectedName.count <= 0 {
             selectThemeNamed(theme.name)
         }
     }

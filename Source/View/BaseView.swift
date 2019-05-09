@@ -16,14 +16,14 @@ public protocol ThemeableView {
 
 public extension UIView {
     
-    public func updateAllThemeableViews() {
+    func updateAllThemeableViews() {
         traverseViewHeirarchy {
             guard let v = $0 as? ThemeableView else { return }
             v.updateTheme()
         }
     }
     
-    public func traverseViewHeirarchy(_ handler: (UIView)->Void) {
+    func traverseViewHeirarchy(_ handler: (UIView)->Void) {
         handler(self)
         subviews.forEach {
             $0.traverseViewHeirarchy(handler)
@@ -112,7 +112,11 @@ open class BaseView: UIView, ThemeableView {
         super.layoutSubviews()
         _addMissingConstraintsIfNecessary()
         if useSafeAreaContainer {
-            let topSpace = safeAreaContainerUsesStatusBarHeight ? statusBarHeight : safeRegionInsets.top
+            var safeRegionInsets = UIEdgeInsets.zero
+            if #available(iOS 11, *) {
+              safeRegionInsets = safeAreaInsets
+            }
+            let topSpace = safeAreaContainerUsesStatusBarHeight ? UIApplication.shared.statusBarFrame.height : safeRegionInsets.top
             safeAreaContainer.frame = CGRect(x: safeRegionInsets.left,
                                              y: topSpace,
                                              width: bounds.width - safeRegionInsets.left - safeRegionInsets.right,

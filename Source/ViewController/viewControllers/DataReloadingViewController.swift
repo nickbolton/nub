@@ -36,7 +36,7 @@ open class DataReloadingViewController<T:UIView, CT, DT>: BaseViewController<T> 
         return []
     }
     
-    open func buildDataSource(success: (([[DT]]?) -> Void)?, failure: DefaultFailureHandler?) -> Bool {
+    open func buildDataSource(success: (([[DT]]?) -> Void)?, failure: ((Error?)->Void)?) -> Bool {
         // abstract
         return false
     }

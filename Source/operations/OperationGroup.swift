@@ -17,7 +17,7 @@ public class OperationGroup: NSObject {
     
     var useConcurrentQueue = true
 
-    public func execute<T:Operation>(operations: [T], onSuccess: (([T])->Void)? = nil, onFailure: DefaultFailureHandler? = nil) {
+    public func execute<T:Operation>(operations: [T], onSuccess: (([T])->Void)? = nil, onFailure: ((Error?)->Void)? = nil) {
         
         self.operations = operations
         
@@ -61,7 +61,7 @@ public class OperationGroup: NSObject {
         }
     }
     
-    private func doExecuteOperations<T:Operation>(_ operations: [T], onSuccess: (([T])->Void)? = nil, onFailure: DefaultFailureHandler? = nil) {
+    private func doExecuteOperations<T:Operation>(_ operations: [T], onSuccess: (([T])->Void)? = nil, onFailure: ((Error?)->Void)? = nil) {
 
         let lock = NSConditionLock(condition: operations.count)
         var firstError: Error?
@@ -75,7 +75,7 @@ public class OperationGroup: NSObject {
             lock.unlock(withCondition: lock.condition - 1)
         }
         
-        let localFailureHandler: DefaultFailureHandler = { error in
+        let localFailureHandler: ((Error?)->Void) = { error in
             lock.lock()
             didError = true
             if firstError == nil {

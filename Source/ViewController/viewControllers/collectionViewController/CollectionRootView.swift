@@ -58,7 +58,12 @@ open class CollectionRootView: BaseView {
                 collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
                 ])
         } else {
-            collectionView.expand()
+            NSLayoutConstraint.activate([
+                collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+                collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+                collectionView.topAnchor.constraint(equalTo: topAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+              ])
         }
     }
 }

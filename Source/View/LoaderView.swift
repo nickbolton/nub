@@ -94,7 +94,7 @@ public class LoaderView: BaseView {
     
     // MARK: Public
     
-    public func show(in view: UIView, animated: Bool = true, ignoreInteractionEvents: Bool = true, animations: DefaultHandler? = nil, onCompletion: DefaultHandler? = nil) {
+    public func show(in view: UIView, animated: Bool = true, ignoreInteractionEvents: Bool = true, animations: (()->Void)? = nil, onCompletion: (()->Void)? = nil) {
         ownerView = view
         if view != self {
             view.addSubview(self)
@@ -119,14 +119,15 @@ public class LoaderView: BaseView {
         }
     }
     
-    public func hide(from view: UIView, animated: Bool = true, animations: DefaultHandler? = nil, onCompletion: DefaultHandler? = nil) {
+    public func hide(from view: UIView, animated: Bool = true, animations: (()->Void)? = nil, onCompletion: (()->Void)? = nil) {
         guard ownerView == nil || view == ownerView || superview != nil else {
             animations?()
             onCompletion?()
             return
         }
         ownerView = nil
-        DispatchQueue.main.asyncAfter(timeInterval: animated ? 0.1 : 0.0) {
+        let deadline = DispatchTime.now() + (animated ? 0.1 : 0.0)
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
             let duration = animated ? ThemeManager.shared.currentTheme().defaultAnimationDuration : 0.0
             UIView.animate(withDuration: duration, animations: {
                 self.alpha = 0.0
